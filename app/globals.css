@@ -426,11 +426,11 @@ a {
   transform: translate(4px, -4px);
 }
 
-.work {
+.clients {
   background: #e9e5dc;
 }
 
-.work-heading {
+.client-heading {
   margin-bottom: 58px;
 }
 
@@ -458,6 +458,12 @@ a {
   background: var(--orange);
 }
 
+.project-card:focus-visible {
+  background: var(--orange);
+  outline: 3px solid var(--ink);
+  outline-offset: 4px;
+}
+
 .project-meta {
   display: flex;
   font-family: var(--font-geist-mono), monospace;
@@ -465,6 +471,18 @@ a {
   justify-content: space-between;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.project-meta b {
+  display: inline-block;
+  font-size: 13px;
+  margin-left: 5px;
+  transition: transform 180ms ease;
+}
+
+.project-card:hover .project-meta b,
+.project-card:focus-visible .project-meta b {
+  transform: translate(3px, -3px);
 }
 
 .project-monogram {

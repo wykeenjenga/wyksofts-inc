@@ -34,5 +34,6 @@ branch and `/docs` folder.
 
 The published contact details are `support@mynomp.com` and
 `+254 703 285 070`. The office location is Mirage Towers, Nairobi. The site
-also includes selected work for Mynomp, City BBQ App, and SlimChickens App,
+also includes linked client projects for Mynomp, City BBQ App, and the
+SlimChickens iOS app,
 with projects advertised from $100 and final pricing based on scope.

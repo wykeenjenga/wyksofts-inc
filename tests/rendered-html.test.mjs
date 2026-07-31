@@ -49,6 +49,13 @@ test("server-renders the WykSofts landing page", async () => {
   assert.match(html, /Mynomp/);
   assert.match(html, /City BBQ App/);
   assert.match(html, /SlimChickens App/);
+  assert.match(html, /Selected clients/);
+  assert.match(html, /Product website/);
+  assert.match(html, /iOS &amp; iPadOS app/);
+  assert.match(html, /iOS app/);
+  assert.match(html, /https:\/\/www\.mynomp\.com\//);
+  assert.match(html, /https:\/\/apps\.apple\.com\/us\/app\/city-barbeque\/id979145837/);
+  assert.match(html, /https:\/\/apps\.apple\.com\/us\/app\/slim-chickens\/id1244055810/);
   assert.match(html, /Projects start from/);
   assert.match(html, />100</);
   assert.match(html, /Get a quotation/);

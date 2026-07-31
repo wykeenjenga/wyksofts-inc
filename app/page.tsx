@@ -59,23 +59,26 @@ const projects = [
   {
     number: "01",
     name: "Mynomp",
-    type: "Web platform",
+    type: "Product website",
     summary:
-      "A modern digital platform built to make services easier to discover, access, and manage.",
+      "An accountability-powered focus platform designed to turn work sessions into lasting momentum.",
+    href: "https://www.mynomp.com/",
   },
   {
     number: "02",
     name: "City BBQ App",
-    type: "Mobile application",
+    type: "iOS & iPadOS app",
     summary:
       "A customer-focused mobile experience designed around convenient ordering and brand engagement.",
+    href: "https://apps.apple.com/us/app/city-barbeque/id979145837",
   },
   {
     number: "03",
     name: "SlimChickens App",
-    type: "Mobile application",
+    type: "iOS app",
     summary:
       "A polished restaurant app experience that brings menu discovery and customer interaction together.",
+    href: "https://apps.apple.com/us/app/slim-chickens/id1244055810",
   },
 ];
 
@@ -92,7 +95,7 @@ export default function Home() {
 
         <nav className="main-nav" aria-label="Primary navigation">
           <a href="#services">Services</a>
-          <a href="#work">Work</a>
+          <a href="#clients">Clients</a>
           <a href="#pricing">Pricing</a>
           <a href="#about">About</a>
         </nav>
@@ -172,10 +175,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="work section" id="work">
-        <div className="section-heading work-heading">
-          <p className="section-kicker">Selected work</p>
-          <h2>Products we&apos;ve helped bring to life.</h2>
+      <section className="clients section" id="clients">
+        <div className="section-heading client-heading">
+          <p className="section-kicker">Selected clients</p>
+          <h2>Client products we&apos;ve helped bring to life.</h2>
           <p>
             A selection of web and mobile experiences delivered for growing
             brands and ambitious teams.
@@ -184,10 +187,19 @@ export default function Home() {
 
         <div className="project-grid">
           {projects.map((project) => (
-            <article className="project-card" key={project.name}>
+            <a
+              className="project-card"
+              href={project.href}
+              key={project.name}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`View ${project.name} project`}
+            >
               <div className="project-meta">
                 <span>{project.number}</span>
-                <span>{project.type}</span>
+                <span>
+                  {project.type} <b aria-hidden="true">↗</b>
+                </span>
               </div>
               <div className="project-monogram" aria-hidden="true">
                 {project.name.charAt(0)}
@@ -196,7 +208,7 @@ export default function Home() {
                 <h3>{project.name}</h3>
                 <p>{project.summary}</p>
               </div>
-            </article>
+            </a>
           ))}
         </div>
       </section>
