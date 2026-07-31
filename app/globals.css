@@ -145,6 +145,8 @@ a {
   --pointer-y: 50%;
   --tilt-x: 0deg;
   --tilt-y: 0deg;
+  --shift-x: 0px;
+  --shift-y: 0px;
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(310px, 0.4fr);
   min-height: calc(100svh - 88px);
@@ -162,6 +164,11 @@ a {
   mask-image: linear-gradient(to bottom, black 0%, transparent 82%);
   pointer-events: none;
   position: absolute;
+  transform: translate(
+    calc(var(--shift-x) * -0.35),
+    calc(var(--shift-y) * -0.35)
+  );
+  transition: transform 180ms ease-out;
 }
 
 .hero-grid::after {
@@ -176,18 +183,33 @@ a {
 }
 
 .hero-cursor {
-  background: var(--orange);
+  border: 1px solid rgba(255, 92, 0, 0.7);
   border-radius: 50%;
-  height: 12px;
+  height: 46px;
   left: 0;
   opacity: 0;
   pointer-events: none;
   position: absolute;
   top: 0;
-  transform: translate(calc(var(--pointer-x) - 6px), calc(var(--pointer-y) - 6px));
-  transition: opacity 180ms ease;
-  width: 12px;
+  transform: translate(calc(var(--pointer-x) - 23px), calc(var(--pointer-y) - 23px));
+  transition:
+    opacity 180ms ease,
+    width 180ms ease,
+    height 180ms ease;
+  width: 46px;
   z-index: 3;
+}
+
+.hero-cursor::after {
+  background: var(--orange);
+  border-radius: 50%;
+  content: "";
+  height: 5px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 5px;
 }
 
 .hero:hover .hero-cursor {
@@ -279,31 +301,75 @@ a {
   display: inline-block;
 }
 
-.hero-hint {
-  align-items: center;
+.outcome-explorer {
+  align-items: end;
+  display: grid;
+  gap: clamp(24px, 4vw, 62px);
+  grid-template-columns: minmax(320px, 0.7fr) minmax(220px, 0.3fr);
+  margin-top: clamp(30px, 4vw, 54px);
+  max-width: 980px;
+}
+
+.outcome-tabs {
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.outcome-tabs button {
   appearance: none;
   background: transparent;
   border: 0;
+  color: var(--muted);
   cursor: pointer;
-  display: inline-flex;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
-  gap: 8px;
-  letter-spacing: 0.08em;
-  margin-top: 30px;
-  padding: 8px 0;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  padding: 0 0 14px;
+  position: relative;
+  text-align: left;
   text-transform: uppercase;
+  transition: color 180ms ease;
 }
 
-.hero-hint span {
+.outcome-tabs button::after {
+  background: var(--orange);
+  bottom: -1px;
+  content: "";
+  height: 3px;
+  left: 0;
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 260ms ease;
+  width: 100%;
+}
+
+.outcome-tabs button:hover,
+.outcome-tabs button:focus-visible,
+.outcome-tabs button.active {
+  color: var(--ink);
+}
+
+.outcome-tabs button.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.outcome-tabs button span {
   color: var(--orange);
-  font-size: 16px;
-  transition: transform 300ms ease;
+  display: block;
+  font-size: 8px;
+  margin-bottom: 7px;
 }
 
-.hero-hint:hover span,
-.hero-hint:focus-visible span {
-  transform: rotate(140deg);
+.outcome-explorer > p {
+  animation: outcome-copy-in 360ms ease both;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
 }
 
 .hero-side {
@@ -315,6 +381,19 @@ a {
   transform-origin: center;
   transition: transform 180ms ease-out;
   will-change: transform;
+}
+
+.hero-actions-interactive .button-primary {
+  transform: translate(var(--shift-x), var(--shift-y));
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease-out;
+}
+
+.hero-actions-interactive .button-primary:hover,
+.hero-actions-interactive .button-primary:focus-visible {
+  transform: translate(var(--shift-x), calc(var(--shift-y) - 3px));
 }
 
 .availability {
@@ -997,12 +1076,29 @@ footer p:last-child {
   }
 }
 
+@keyframes outcome-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (hover: none), (pointer: coarse) {
   .hero-cursor {
     display: none;
   }
 
   .hero-side {
+    transform: none;
+  }
+
+  .hero-actions-interactive .button-primary,
+  .hero-actions-interactive .button-primary:hover,
+  .hero-actions-interactive .button-primary:focus-visible {
     transform: none;
   }
 }
@@ -1077,6 +1173,12 @@ footer p:last-child {
 
   .hero h1 {
     font-size: clamp(52px, 17vw, 82px);
+  }
+
+  .outcome-explorer {
+    align-items: start;
+    gap: 18px;
+    grid-template-columns: 1fr;
   }
 
   .section-heading,

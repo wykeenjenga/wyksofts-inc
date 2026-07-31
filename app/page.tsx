@@ -87,9 +87,21 @@ const projects = [
 ];
 
 const heroOutcomes = [
-  "move businesses",
-  "delight customers",
-  "simplify work",
+  {
+    phrase: "move businesses",
+    label: "Grow",
+    detail: "Digital foundations designed to unlock the next stage of growth.",
+  },
+  {
+    phrase: "delight customers",
+    label: "Delight",
+    detail: "Fast, thoughtful experiences people enjoy coming back to.",
+  },
+  {
+    phrase: "simplify work",
+    label: "Simplify",
+    detail: "Purpose-built tools that make complex operations feel effortless.",
+  },
 ];
 
 export default function Home() {
@@ -110,6 +122,8 @@ export default function Home() {
     hero.style.setProperty("--pointer-y", `${y}px`);
     hero.style.setProperty("--tilt-x", `${((y / bounds.height) - 0.5) * -4}deg`);
     hero.style.setProperty("--tilt-y", `${((x / bounds.width) - 0.5) * 4}deg`);
+    hero.style.setProperty("--shift-x", `${((x / bounds.width) - 0.5) * 8}px`);
+    hero.style.setProperty("--shift-y", `${((y / bounds.height) - 0.5) * 8}px`);
   }
 
   function resetHeroPointer() {
@@ -118,6 +132,8 @@ export default function Home() {
 
     hero.style.setProperty("--tilt-x", "0deg");
     hero.style.setProperty("--tilt-y", "0deg");
+    hero.style.setProperty("--shift-x", "0px");
+    hero.style.setProperty("--shift-y", "0px");
   }
 
   function cycleOutcome() {
@@ -167,18 +183,33 @@ export default function Home() {
               className="hero-outcome"
               type="button"
               onClick={cycleOutcome}
-              aria-label={`Change outcome. Currently: ${heroOutcomes[outcomeIndex]}`}
+              aria-label={`Change outcome. Currently: ${heroOutcomes[outcomeIndex].phrase}`}
             >
-              <em key={heroOutcomes[outcomeIndex]} aria-live="polite">
-                {heroOutcomes[outcomeIndex]}
+              <em key={heroOutcomes[outcomeIndex].phrase} aria-live="polite">
+                {heroOutcomes[outcomeIndex].phrase}
               </em>
             </button>{" "}
             forward.
           </h1>
-          <button className="hero-hint" type="button" onClick={cycleOutcome}>
-            <span aria-hidden="true">↻</span>
-            Click the orange words
-          </button>
+          <div className="outcome-explorer">
+            <div className="outcome-tabs" role="group" aria-label="Choose an outcome">
+              {heroOutcomes.map((outcome, index) => (
+                <button
+                  className={index === outcomeIndex ? "active" : ""}
+                  type="button"
+                  key={outcome.phrase}
+                  onClick={() => setOutcomeIndex(index)}
+                  aria-pressed={index === outcomeIndex}
+                >
+                  <span>0{index + 1}</span>
+                  {outcome.label}
+                </button>
+              ))}
+            </div>
+            <p key={heroOutcomes[outcomeIndex].detail} aria-live="polite">
+              {heroOutcomes[outcomeIndex].detail}
+            </p>
+          </div>
         </div>
 
         <aside className="hero-side">
@@ -191,7 +222,7 @@ export default function Home() {
             ambitious ideas into thoughtful mobile apps, websites, and custom
             software.
           </p>
-          <div className="hero-actions">
+          <div className="hero-actions hero-actions-interactive">
             <a className="button button-primary" href="#contact">
               Tell us your idea
               <span aria-hidden="true">↗</span>

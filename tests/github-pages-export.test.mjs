@@ -10,7 +10,10 @@ test("GitHub Pages export keeps the client-side hero interactive", async () => {
 
   assert.match(html, /<script\b/i);
   assert.match(html, /import\("\.\/assets\/index-[^\"]+\.js"\)/i);
-  assert.match(html, /Click the orange words/);
+  assert.match(html, /Choose an outcome/);
+  assert.match(html, /Grow/);
+  assert.match(html, /Delight/);
+  assert.match(html, /Simplify/);
   assert.doesNotMatch(html, /["']\/assets\//);
 
   const pageAsset = html.match(
