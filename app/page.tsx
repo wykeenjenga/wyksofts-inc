@@ -55,6 +55,30 @@ const process = [
   },
 ];
 
+const projects = [
+  {
+    number: "01",
+    name: "Mynomp",
+    type: "Web platform",
+    summary:
+      "A modern digital platform built to make services easier to discover, access, and manage.",
+  },
+  {
+    number: "02",
+    name: "City BBQ App",
+    type: "Mobile application",
+    summary:
+      "A customer-focused mobile experience designed around convenient ordering and brand engagement.",
+  },
+  {
+    number: "03",
+    name: "SlimChickens App",
+    type: "Mobile application",
+    summary:
+      "A polished restaurant app experience that brings menu discovery and customer interaction together.",
+  },
+];
+
 export default function Home() {
   return (
     <main>
@@ -68,12 +92,13 @@ export default function Home() {
 
         <nav className="main-nav" aria-label="Primary navigation">
           <a href="#services">Services</a>
-          <a href="#approach">Approach</a>
+          <a href="#work">Work</a>
+          <a href="#pricing">Pricing</a>
           <a href="#about">About</a>
         </nav>
 
-        <a className="nav-cta" href="#contact">
-          Start a project
+        <a className="nav-cta" href="#pricing">
+          Get a quotation
           <span aria-hidden="true">↗</span>
         </a>
       </header>
@@ -112,7 +137,7 @@ export default function Home() {
             </a>
           </div>
           <div className="location">
-            <span>Nairobi, Kenya</span>
+            <span>Mirage Towers, Nairobi</span>
             <span>Working with teams everywhere</span>
           </div>
         </aside>
@@ -142,6 +167,35 @@ export default function Home() {
               <span className="service-arrow" aria-hidden="true">
                 ↗
               </span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="work section" id="work">
+        <div className="section-heading work-heading">
+          <p className="section-kicker">Selected work</p>
+          <h2>Products we&apos;ve helped bring to life.</h2>
+          <p>
+            A selection of web and mobile experiences delivered for growing
+            brands and ambitious teams.
+          </p>
+        </div>
+
+        <div className="project-grid">
+          {projects.map((project) => (
+            <article className="project-card" key={project.name}>
+              <div className="project-meta">
+                <span>{project.number}</span>
+                <span>{project.type}</span>
+              </div>
+              <div className="project-monogram" aria-hidden="true">
+                {project.name.charAt(0)}
+              </div>
+              <div>
+                <h3>{project.name}</h3>
+                <p>{project.summary}</p>
+              </div>
             </article>
           ))}
         </div>
@@ -214,6 +268,38 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="pricing section" id="pricing">
+        <div className="pricing-copy">
+          <p className="section-kicker">Simple starting point</p>
+          <h2>Quality digital work, sized for where you are.</h2>
+          <p>
+            Every project is different. Share what you need and we&apos;ll send a
+            clear, scope-based quotation with the deliverables, timeline, and
+            total cost.
+          </p>
+        </div>
+
+        <aside className="price-card">
+          <p>Projects start from</p>
+          <div className="price">
+            <span>$</span>
+            <strong>100</strong>
+          </div>
+          <p>
+            A practical entry point for focused landing pages, small digital
+            improvements, and clearly scoped work.
+          </p>
+          <a
+            className="button quote-button"
+            href="mailto:support@mynomp.com?subject=Request%20a%20WykSofts%20quotation&body=Project%20type%3A%0AWhat%20you%20need%3A%0ATimeline%3A%0ABudget%3A"
+          >
+            Get a quotation
+            <span aria-hidden="true">↗</span>
+          </a>
+          <small>Final pricing depends on scope and requirements.</small>
+        </aside>
+      </section>
+
       <section className="contact section" id="contact">
         <div className="contact-orbit" aria-hidden="true">
           <span>WYKSOFTS</span>
@@ -235,6 +321,7 @@ export default function Home() {
           <a className="contact-phone" href="tel:+254703285070">
             +254 703 285 070
           </a>
+          <span className="office-location">Mirage Towers, Nairobi</span>
         </div>
       </section>
 
@@ -250,7 +337,7 @@ export default function Home() {
           {" · "}
           <a href="tel:+254703285070">+254 703 285 070</a>
         </p>
-        <p>Nairobi, Kenya · © {new Date().getFullYear()} WykSofts Inc.</p>
+        <p>Mirage Towers, Nairobi · © {new Date().getFullYear()} WykSofts Inc.</p>
       </footer>
     </main>
   );
