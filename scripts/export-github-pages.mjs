@@ -32,8 +32,6 @@ if (!response.ok) {
 
 let html = await response.text();
 html = html
-  .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
-  .replace(/<link\b[^>]*rel=["']modulepreload["'][^>]*\/?>/gi, "")
   .replaceAll("/assets/", "./assets/")
   .replaceAll('href="/favicon.svg"', 'href="./favicon.svg"')
   .replaceAll("<!-- -->", "");
