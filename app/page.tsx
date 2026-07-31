@@ -153,8 +153,9 @@ export default function Home() {
         <nav className="main-nav" aria-label="Primary navigation">
           <a href="#services">Services</a>
           <a href="#clients">Clients</a>
-          <a href="#pricing">Pricing</a>
           <a href="#about">About</a>
+          <a href="#careers">Careers</a>
+          <a href="#policies">Policies</a>
         </nav>
 
         <a className="nav-cta" href="#pricing">
@@ -369,8 +370,63 @@ export default function Home() {
                 </p>
               </article>
             </div>
+            <div className="company-facts" aria-label="Company information">
+              <div>
+                <span>Based in</span>
+                <strong>Mirage Towers, Nairobi</strong>
+              </div>
+              <div>
+                <span>Working model</span>
+                <strong>Local insight, global delivery</strong>
+              </div>
+              <div>
+                <span>Core disciplines</span>
+                <strong>Strategy, design & engineering</strong>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
+
+      <section className="careers section" id="careers">
+        <div className="careers-copy">
+          <p className="section-kicker light">Careers at WykSofts</p>
+          <h2>Do work you&apos;re proud to put your name on.</h2>
+          <p>
+            We are building a thoughtful, dependable team around product
+            strategy, design, software engineering, quality assurance, and
+            project delivery. We value curiosity, ownership, clear
+            communication, and respect for the people using what we build.
+          </p>
+        </div>
+        <aside className="careers-panel">
+          <div className="careers-status">
+            <span className="pulse" />
+            Open to exceptional people
+          </div>
+          <h3>Don&apos;t see a listed role?</h3>
+          <p>
+            Send a short introduction, your area of expertise, and links to
+            work you are proud of. We review open applications as suitable
+            opportunities arise.
+          </p>
+          <div className="career-tags" aria-label="Areas of interest">
+            <span>Engineering</span>
+            <span>Product design</span>
+            <span>Quality assurance</span>
+            <span>Project delivery</span>
+          </div>
+          <a
+            className="button careers-button"
+            href="mailto:support@mynomp.com?subject=Careers%20at%20WykSofts&body=Name%3A%0AArea%20of%20expertise%3A%0APortfolio%20or%20profile%20link%3A%0AShort%20introduction%3A"
+          >
+            Introduce yourself
+            <span aria-hidden="true">↗</span>
+          </a>
+          <small>
+            General applications are not a promise of immediate employment.
+          </small>
+        </aside>
       </section>
 
       <section className="pricing section" id="pricing">
@@ -405,6 +461,114 @@ export default function Home() {
         </aside>
       </section>
 
+      <section className="policies section" id="policies">
+        <div className="policies-intro">
+          <p className="section-kicker">Working together</p>
+          <h2>Clear expectations make better projects.</h2>
+          <p>
+            These summaries explain our usual way of working. Every engagement
+            is governed by the quotation, statement of work, or agreement
+            accepted by both parties; that signed document takes priority if
+            anything differs.
+          </p>
+          <span className="policy-date">Last updated 31 July 2026</span>
+        </div>
+
+        <div className="policy-list">
+          <details open>
+            <summary>
+              <span>01</span>
+              Terms of engagement
+              <b aria-hidden="true">+</b>
+            </summary>
+            <div>
+              <p>
+                Work begins after scope, deliverables, responsibilities,
+                timeline, and payment milestones are agreed. Requests outside
+                that scope are estimated and approved before they are added.
+              </p>
+              <p>
+                Unless an agreement says otherwise, ownership of custom work
+                transfers after full payment. Third-party software, fonts,
+                services, and open-source components remain subject to their
+                own licences.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span>02</span>
+              Project cancellation
+              <b aria-hidden="true">+</b>
+            </summary>
+            <div>
+              <p>
+                Either party may request cancellation in writing. The final
+                account will cover work completed, approved milestones, and
+                non-recoverable third-party costs committed for the project.
+              </p>
+              <p>
+                Paid-for work and available project materials are handed over
+                in a reasonable format. Any unused balance or outstanding
+                amount is handled according to the accepted quotation or
+                agreement.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span>03</span>
+              Privacy & data
+              <b aria-hidden="true">+</b>
+            </summary>
+            <div>
+              <p>
+                We use information you send us to respond to enquiries,
+                prepare quotations, deliver agreed work, and manage legitimate
+                business records. We aim to collect only what is necessary and
+                do not sell personal information.
+              </p>
+              <p>
+                This website currently has no onsite contact form or advertising
+                trackers. Email and telephone communications are also handled by
+                the providers you choose to use. Privacy questions can be sent
+                to support@mynomp.com.
+              </p>
+              <a
+                href="https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Kenya Data Protection Act ↗
+              </a>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span>04</span>
+              Support & warranties
+              <b aria-hidden="true">+</b>
+            </summary>
+            <div>
+              <p>
+                Testing, launch support, defect correction periods, maintenance,
+                and service levels are defined per project. Ongoing support is
+                available through a separate maintenance plan or agreed support
+                arrangement.
+              </p>
+              <p>
+                We cannot guarantee uninterrupted operation of services
+                controlled by third parties, but we communicate issues clearly
+                and help identify practical next steps.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
       <section className="contact section" id="contact">
         <div className="contact-orbit" aria-hidden="true">
           <span>WYKSOFTS</span>
@@ -430,19 +594,46 @@ export default function Home() {
         </div>
       </section>
 
-      <footer>
-        <a className="brand footer-brand" href="#top">
-          <span className="brand-mark" aria-hidden="true">
-            W
-          </span>
-          <span>WykSofts Inc.</span>
-        </a>
-        <p>
-          <a href="mailto:support@mynomp.com">support@mynomp.com</a>
-          {" · "}
-          <a href="tel:+254703285070">+254 703 285 070</a>
-        </p>
-        <p>Mirage Towers, Nairobi · © {new Date().getFullYear()} WykSofts Inc.</p>
+      <footer className="site-footer">
+        <div className="footer-overview">
+          <a className="brand footer-brand" href="#top">
+            <span className="brand-mark" aria-hidden="true">
+              W
+            </span>
+            <span>WykSofts Inc.</span>
+          </a>
+          <p>
+            Digital products built with clear thinking, careful design, and
+            dependable engineering.
+          </p>
+        </div>
+        <div className="footer-column">
+          <h3>Company</h3>
+          <a href="#about">About</a>
+          <a href="#clients">Clients</a>
+          <a href="#careers">Careers</a>
+        </div>
+        <div className="footer-column">
+          <h3>Work with us</h3>
+          <a href="#services">Services</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div className="footer-column">
+          <h3>Policies</h3>
+          <a href="#policies">Terms</a>
+          <a href="#policies">Cancellation</a>
+          <a href="#policies">Privacy</a>
+        </div>
+        <div className="footer-bottom">
+          <p>© {new Date().getFullYear()} WykSofts Inc. All rights reserved.</p>
+          <p>Mirage Towers, Nairobi</p>
+          <p>
+            <a href="mailto:support@mynomp.com">support@mynomp.com</a>
+            {" · "}
+            <a href="tel:+254703285070">+254 703 285 070</a>
+          </p>
+        </div>
       </footer>
     </main>
   );

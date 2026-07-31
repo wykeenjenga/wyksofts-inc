@@ -59,6 +59,14 @@ test("server-renders the WykSofts landing page", async () => {
   assert.match(html, /Projects start from/);
   assert.match(html, />100</);
   assert.match(html, /Get a quotation/);
+  assert.match(html, /Careers at WykSofts/);
+  assert.match(html, /Open to exceptional people/);
+  assert.match(html, /Terms of engagement/);
+  assert.match(html, /Project cancellation/);
+  assert.match(html, /Privacy &amp; data/);
+  assert.match(html, /Support &amp; warranties/);
+  assert.match(html, /General applications are not a promise of immediate employment/);
+  assert.match(html, /All rights reserved/);
   assert.match(html, /href="#contact"/);
   assert.match(html, /mailto:support@mynomp\.com/);
   assert.match(html, /tel:\+254703285070/);
