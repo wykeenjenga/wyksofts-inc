@@ -1,3 +1,7 @@
+"use client";
+
+import { useRef, useState, type PointerEvent } from "react";
+
 const services = [
   {
     number: "01",
@@ -82,7 +86,44 @@ const projects = [
   },
 ];
 
+const heroOutcomes = [
+  "move businesses",
+  "delight customers",
+  "simplify work",
+];
+
 export default function Home() {
+  const heroRef = useRef<HTMLElement>(null);
+  const [outcomeIndex, setOutcomeIndex] = useState(0);
+
+  function handleHeroPointerMove(event: PointerEvent<HTMLElement>) {
+    if (event.pointerType !== "mouse") return;
+
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const bounds = hero.getBoundingClientRect();
+    const x = event.clientX - bounds.left;
+    const y = event.clientY - bounds.top;
+
+    hero.style.setProperty("--pointer-x", `${x}px`);
+    hero.style.setProperty("--pointer-y", `${y}px`);
+    hero.style.setProperty("--tilt-x", `${((y / bounds.height) - 0.5) * -4}deg`);
+    hero.style.setProperty("--tilt-y", `${((x / bounds.width) - 0.5) * 4}deg`);
+  }
+
+  function resetHeroPointer() {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    hero.style.setProperty("--tilt-x", "0deg");
+    hero.style.setProperty("--tilt-y", "0deg");
+  }
+
+  function cycleOutcome() {
+    setOutcomeIndex((current) => (current + 1) % heroOutcomes.length);
+  }
+
   return (
     <main>
       <header className="site-header">
@@ -106,8 +147,15 @@ export default function Home() {
         </a>
       </header>
 
-      <section className="hero" id="top">
+      <section
+        className="hero"
+        id="top"
+        ref={heroRef}
+        onPointerMove={handleHeroPointerMove}
+        onPointerLeave={resetHeroPointer}
+      >
         <div className="hero-grid" aria-hidden="true" />
+        <div className="hero-cursor" aria-hidden="true" />
         <div className="hero-main">
           <p className="eyebrow">
             <span />
@@ -115,8 +163,22 @@ export default function Home() {
           </p>
           <h1>
             We build digital products that{" "}
-            <em>move businesses</em> forward.
+            <button
+              className="hero-outcome"
+              type="button"
+              onClick={cycleOutcome}
+              aria-label={`Change outcome. Currently: ${heroOutcomes[outcomeIndex]}`}
+            >
+              <em key={heroOutcomes[outcomeIndex]} aria-live="polite">
+                {heroOutcomes[outcomeIndex]}
+              </em>
+            </button>{" "}
+            forward.
           </h1>
+          <button className="hero-hint" type="button" onClick={cycleOutcome}>
+            <span aria-hidden="true">↻</span>
+            Click the orange words
+          </button>
         </div>
 
         <aside className="hero-side">
