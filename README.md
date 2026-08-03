@@ -32,8 +32,14 @@ The finished static site is written to `docs/`. In the GitHub repository, open
 **Settings → Pages**, choose **Deploy from a branch**, then select the `main`
 branch and `/docs` folder.
 
-The published contact details are `support@mynomp.com` and
+The published contact details are `hello@wyksoftsinc.com` and
 `+254 703 285 070`. The office location is Mirage Towers, Nairobi. The site
 also includes linked client projects for Mynomp, City BBQ App, and the
 SlimChickens iOS app,
 with projects advertised from $100 and final pricing based on scope.
+
+## Publish with Vercel
+
+The included `vercel.json` builds the static site into `docs/` and serves that
+directory from Vercel. Production metadata uses `https://wyksoftsinc.com` as the
+canonical public origin.

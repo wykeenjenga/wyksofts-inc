@@ -46,6 +46,16 @@ test("server-renders the WykSofts landing page", async () => {
   assert.match(html, /APIs &amp; integrations/);
   assert.match(html, /AI &amp; cloud/);
   assert.match(html, /Mirage Towers, Nairobi/);
+  assert.match(html, /WykSofts in motion/);
+  assert.match(html, /Ideas become products/);
+  assert.match(html, /wyksofts-launch\.mp4/);
+  assert.match(html, /wyksofts-launch-poster\.jpg/);
+  assert.match(html, /Wycliff Njenga/);
+  assert.match(html, /Founder &amp; CEO/);
+  assert.match(html, /10\+/);
+  assert.match(html, /Wycliff Njenga, Founder and CEO of WykSofts Inc\./);
+  assert.match(html, /linkedin\.com\/in\/wycliff-njenga-5973b512a/);
+  assert.match(html, /github\.com\/wykeenjenga/);
   assert.match(html, /Mynomp/);
   assert.match(html, /City BBQ App/);
   assert.match(html, /SlimChickens App/);
@@ -64,7 +74,8 @@ test("server-renders the WykSofts landing page", async () => {
   assert.match(html, /From \$100/);
   assert.match(html, /Get a quotation/);
   assert.match(html, /Build your quotation request/);
-  assert.match(html, /Continue by email/);
+  assert.match(html, /Request quotation/);
+  assert.match(html, /private review queue/);
   assert.match(html, /Continue on WhatsApp/);
   assert.match(html, /wa\.me\/254703285070/);
   assert.match(html, /Careers at WykSofts/);
@@ -84,7 +95,7 @@ test("server-renders the WykSofts landing page", async () => {
   assert.match(html, /General applications are not a promise of immediate employment/);
   assert.match(html, /All rights reserved/);
   assert.match(html, /href="#contact"/);
-  assert.match(html, /mailto:support@mynomp\.com/);
+  assert.match(html, /mailto:hello@wyksoftsinc\.com/);
   assert.match(html, /tel:\+254703285070/);
   assert.match(html, /\+254 703 285 070/);
   assert.match(html, /https:\/\/wyksofts\.example\/og\.png/);
