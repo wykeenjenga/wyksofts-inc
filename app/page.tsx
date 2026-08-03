@@ -6,6 +6,7 @@ import {
   type FormEvent,
   type PointerEvent,
 } from "react";
+import { getSupabaseBrowserClient } from "../lib/supabase";
 
 const services = [
   {
@@ -195,8 +196,8 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: "WykSofts Inc.",
-  url: "https://wykeenjenga.github.io/wyksofts-inc/",
-  email: "support@mynomp.com",
+  url: "https://wyksoftsinc.com/",
+  email: "hello@wyksoftsinc.com",
   telephone: "+254703285070",
   priceRange: "From USD 100",
   description:
@@ -208,6 +209,16 @@ const organizationSchema = {
     addressCountry: "KE",
   },
   areaServed: "Worldwide",
+  founder: {
+    "@type": "Person",
+    name: "Wycliff Njenga",
+    jobTitle: "Founder & CEO",
+    url: "https://wyksoftsinc.com/#founder",
+    sameAs: [
+      "https://www.linkedin.com/in/wycliff-njenga-5973b512a/",
+      "https://github.com/wykeenjenga",
+    ],
+  },
 };
 
 export default function Home() {
@@ -221,6 +232,7 @@ export default function Home() {
     email: "",
     message: "",
   });
+  const [quoteStatus, setQuoteStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const quoteMessage = [
     "Hello WykSofts, I would like a quotation.",
@@ -271,11 +283,33 @@ export default function Home() {
     setQuote((current) => ({ ...current, [field]: value }));
   }
 
-  function handleQuoteSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleQuoteSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    window.location.href = `mailto:support@mynomp.com?subject=${encodeURIComponent(
-      `WykSofts quotation — ${quote.projectType}`,
-    )}&body=${encodeURIComponent(quoteMessage)}`;
+    const supabase = getSupabaseBrowserClient();
+
+    if (!supabase) {
+      setQuoteStatus("error");
+      return;
+    }
+
+    setQuoteStatus("sending");
+    const { error } = await supabase.from("wyksofts_inquiries").insert({
+      name: quote.name.trim(),
+      email: quote.email.trim(),
+      project_type: quote.projectType,
+      budget: quote.budget,
+      timeline: quote.timeline,
+      message: quote.message.trim(),
+      source: "homepage-quotation-builder",
+    });
+
+    if (error) {
+      setQuoteStatus("error");
+      return;
+    }
+
+    setQuoteStatus("sent");
+    setQuote((current) => ({ ...current, name: "", email: "", message: "" }));
   }
 
   return (
@@ -292,11 +326,11 @@ export default function Home() {
           <a href="#services">Services</a>
           <a href="#clients">Clients</a>
           <a href="#about">About</a>
-          <a href="#careers">Careers</a>
+          <a href="/careers/">Careers</a>
           <a href="#faq">FAQ</a>
         </nav>
 
-        <a className="nav-cta" href="#pricing">
+        <a className="nav-cta" href="/inquiry/">
           Get a quotation
           <span aria-hidden="true">↗</span>
         </a>
@@ -381,6 +415,37 @@ export default function Home() {
             <span>Working with teams everywhere</span>
           </div>
         </aside>
+      </section>
+
+      <section className="launch-film section" id="launch-film">
+        <div className="launch-film-heading">
+          <p className="section-kicker light">WykSofts in motion</p>
+          <h2>Ideas become products. Products create momentum.</h2>
+          <p>
+            An 18-second introduction to the thinking, craft, and ambition
+            behind WykSofts Inc.
+          </p>
+          <a href="./media/wyksofts-launch.mp4" download>
+            Download launch film <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+        <div className="launch-film-stage">
+          <span className="launch-film-index">00:18 / Launch film</span>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls
+            preload="metadata"
+            poster="./media/wyksofts-launch-poster.jpg"
+            aria-label="WykSofts Inc. kinetic website launch film"
+          >
+            <source src="./media/wyksofts-launch.mp4" type="video/mp4" />
+            Your browser does not support embedded video. Download the launch
+            film using the link beside it.
+          </video>
+        </div>
       </section>
 
       <section className="services section" id="services">
@@ -546,6 +611,70 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="founder section" id="founder">
+        <div className="founder-portrait">
+          <img
+            src="./projects/wycliff-njenga-brand.jpg"
+            alt="Wycliff Njenga, Founder and CEO of WykSofts Inc."
+          />
+          <span aria-hidden="true">Founder / CEO</span>
+        </div>
+        <div className="founder-copy">
+          <p className="section-kicker">Meet the founder</p>
+          <h2>Wycliff Njenga</h2>
+          <p className="founder-role">Founder &amp; CEO · WykSofts Inc.</p>
+          <p className="founder-bio">
+            Wycliff Njenga is the Founder and CEO of WykSofts Inc., a
+            Nairobi-based software company building mobile applications,
+            websites, web platforms, and custom digital products. With more
+            than 10 years in technology, he combines product thinking,
+            thoughtful design, and dependable engineering to move ideas from
+            early concepts to useful, scalable solutions. His experience spans
+            customer-facing mobile products, business websites, software
+            integrations, and cloud-based systems. Through WykSofts, Wycliff
+            focuses on clear communication, practical technology, and
+            long-term client value. He is especially interested in creating
+            digital tools that simplify work, support business growth, and
+            deliver excellent experiences for the people who use them.
+          </p>
+          <div className="founder-facts" aria-label="Founder experience">
+            <div>
+              <strong>10+</strong>
+              <span>Years in technology</span>
+            </div>
+            <div>
+              <strong>Nairobi</strong>
+              <span>Building for clients worldwide</span>
+            </div>
+          </div>
+          <div className="founder-skills" aria-label="Founder skills">
+            <span>Product strategy</span>
+            <span>Mobile apps</span>
+            <span>Web platforms</span>
+            <span>Custom software</span>
+            <span>API integrations</span>
+            <span>Cloud &amp; AI</span>
+            <span>Technical leadership</span>
+          </div>
+          <div className="founder-links">
+            <a
+              href="https://www.linkedin.com/in/wycliff-njenga-5973b512a/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn <span aria-hidden="true">↗</span>
+            </a>
+            <a
+              href="https://github.com/wykeenjenga"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section className="careers section" id="careers">
         <div className="careers-copy">
           <p className="section-kicker light">Careers at WykSofts</p>
@@ -574,11 +703,8 @@ export default function Home() {
             <span>Quality assurance</span>
             <span>Project delivery</span>
           </div>
-          <a
-            className="button careers-button"
-            href="mailto:support@mynomp.com?subject=Careers%20at%20WykSofts&body=Name%3A%0AArea%20of%20expertise%3A%0APortfolio%20or%20profile%20link%3A%0AShort%20introduction%3A"
-          >
-            Introduce yourself
+          <a className="button careers-button" href="/careers/">
+            View careers &amp; apply
             <span aria-hidden="true">↗</span>
           </a>
           <small>
@@ -627,8 +753,8 @@ export default function Home() {
             <p className="section-kicker light">Project planner</p>
             <h3>Build your quotation request.</h3>
             <p>
-              This takes about two minutes. Your answers stay in your browser
-              until you choose email or WhatsApp—nothing is stored on this site.
+              This takes about two minutes. Submit the form and your request
+              goes securely into our private review queue.
             </p>
             <div className="quote-contact-note">
               <span>Prefer to talk?</span>
@@ -714,8 +840,8 @@ export default function Home() {
             </label>
 
             <div className="quote-actions">
-              <button className="button quote-button" type="submit">
-                Continue by email
+              <button className="button quote-button" type="submit" disabled={quoteStatus === "sending"}>
+                {quoteStatus === "sending" ? "Sending…" : "Request quotation"}
                 <span aria-hidden="true">↗</span>
               </button>
               <a
@@ -728,6 +854,16 @@ export default function Home() {
                 <span aria-hidden="true">↗</span>
               </a>
             </div>
+            {quoteStatus === "sent" && (
+              <p className="quote-feedback quote-feedback-success" role="status">
+                Thank you—your quotation request is now in our review queue. We’ll reply within one business day.
+              </p>
+            )}
+            {quoteStatus === "error" && (
+              <p className="quote-feedback quote-feedback-error" role="alert">
+                We could not save your request. Please try again or email hello@wyksoftsinc.com.
+              </p>
+            )}
             <small>
               This creates an enquiry, not a binding order. Final pricing depends
               on scope and requirements.
@@ -833,7 +969,7 @@ export default function Home() {
                 email or WhatsApp application; this website does not store the
                 answers you type. Communications are then handled by the provider
                 you choose to use. Privacy questions can be sent to
-                support@mynomp.com.
+                hello@wyksoftsinc.com.
               </p>
               <a
                 href="https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31"
@@ -904,14 +1040,14 @@ export default function Home() {
           <div className="contact-primary-actions">
             <a
               className="button contact-button"
-              href="mailto:support@mynomp.com?subject=Let%27s%20build%20a%20project"
+              href="mailto:hello@wyksoftsinc.com?subject=Let%27s%20build%20a%20project"
             >
               Email our team
               <span aria-hidden="true">↗</span>
             </a>
             <a
               className="button discovery-button"
-              href="mailto:support@mynomp.com?subject=Book%20a%2030-minute%20WykSofts%20discovery%20call&body=Name%3A%0ACompany%3A%0ATime%20zone%3A%0APreferred%20dates%20and%20times%3A%0AWhat%20I%27d%20like%20to%20discuss%3A"
+              href="mailto:hello@wyksoftsinc.com?subject=Book%20a%2030-minute%20WykSofts%20discovery%20call&body=Name%3A%0ACompany%3A%0ATime%20zone%3A%0APreferred%20dates%20and%20times%3A%0AWhat%20I%27d%20like%20to%20discuss%3A"
             >
               Book a discovery call
               <span aria-hidden="true">↗</span>
@@ -955,12 +1091,14 @@ export default function Home() {
         <div className="footer-column">
           <h3>Company</h3>
           <a href="#about">About</a>
+          <a href="#founder">Founder</a>
           <a href="#clients">Clients</a>
-          <a href="#careers">Careers</a>
+          <a href="/careers/">Careers</a>
           <a href="#faq">FAQ</a>
         </div>
         <div className="footer-column">
           <h3>Work with us</h3>
+          <a href="/inquiry/">Start a project</a>
           <a href="#services">Services</a>
           <a href="#pricing">Pricing</a>
           <a href="#contact">Contact</a>
@@ -984,7 +1122,7 @@ export default function Home() {
             </a>
           </p>
           <p>
-            <a href="mailto:support@mynomp.com">support@mynomp.com</a>
+            <a href="mailto:hello@wyksoftsinc.com">hello@wyksoftsinc.com</a>
             {" · "}
             <a href="tel:+254703285070">+254 703 285 070</a>
           </p>

@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol =
     requestHeaders.get("x-forwarded-proto") ??
     (host?.includes("localhost") ? "http" : "https");
-  const origin = host ? `${protocol}://${host}` : "https://wyksofts.com";
+  const origin = host ? `${protocol}://${host}` : "https://wyksoftsinc.com";
   const socialImage = new URL("/og.png", origin);
 
   return {
