@@ -148,6 +148,68 @@ const heroOutcomes = [
   },
 ];
 
+const faqs = [
+  {
+    question: "How much does a project cost?",
+    answer:
+      "Focused landing-page work starts from $100. Business websites, mobile apps, web platforms, and custom software are quoted after the scope, integrations, content, timeline, and support needs are understood.",
+  },
+  {
+    question: "How long will my project take?",
+    answer:
+      "A focused landing page may take around one to three weeks when content and feedback are ready. Larger websites and software products are planned in milestones, with a realistic delivery schedule included in the quotation.",
+  },
+  {
+    question: "Can you improve an existing website or app?",
+    answer:
+      "Yes. We can review an existing product, identify the highest-value improvements, modernize the interface, add features, improve performance, or help stabilize its technical foundation.",
+  },
+  {
+    question: "Who owns the finished work?",
+    answer:
+      "Ownership is defined in the accepted agreement. Unless stated otherwise, ownership of custom deliverables transfers after full payment, while third-party and open-source components remain under their original licences.",
+  },
+  {
+    question: "Do you provide maintenance and support?",
+    answer:
+      "Yes. Launch assistance, defect correction, ongoing maintenance, feature development, monitoring, and service levels can be included in the project or arranged as a separate support plan.",
+  },
+  {
+    question: "How do payments work?",
+    answer:
+      "Payment structure depends on the project. Larger engagements are normally divided into agreed milestones, while smaller focused work may use a simpler payment schedule. The quotation confirms the exact arrangement before work begins.",
+  },
+  {
+    question: "Will you keep my idea confidential?",
+    answer:
+      "We treat project information as confidential and can review a reasonable non-disclosure agreement before sensitive discovery. Access to project materials is limited to people involved in delivering the engagement.",
+  },
+  {
+    question: "Can WykSofts work with teams outside Nairobi?",
+    answer:
+      "Yes. We are based at Mirage Towers in Nairobi and can collaborate remotely with clients and teams in other regions through scheduled calls, written updates, shared project tools, and milestone reviews.",
+  },
+];
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "WykSofts Inc.",
+  url: "https://wykeenjenga.github.io/wyksofts-inc/",
+  email: "support@mynomp.com",
+  telephone: "+254703285070",
+  priceRange: "From USD 100",
+  description:
+    "Software development company building mobile apps, websites, custom software, integrations, AI solutions, and cloud platforms.",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Mirage Towers",
+    addressLocality: "Nairobi",
+    addressCountry: "KE",
+  },
+  areaServed: "Worldwide",
+};
+
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const [outcomeIndex, setOutcomeIndex] = useState(0);
@@ -231,7 +293,7 @@ export default function Home() {
           <a href="#clients">Clients</a>
           <a href="#about">About</a>
           <a href="#careers">Careers</a>
-          <a href="#policies">Policies</a>
+          <a href="#faq">FAQ</a>
         </nav>
 
         <a className="nav-cta" href="#pricing">
@@ -239,6 +301,11 @@ export default function Home() {
           <span aria-hidden="true">↗</span>
         </a>
       </header>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
 
       <section
         className="hero"
@@ -669,6 +736,29 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="faq section" id="faq">
+        <div className="faq-heading">
+          <p className="section-kicker light">Frequently asked questions</p>
+          <h2>Good questions deserve clear answers.</h2>
+          <p>
+            A quick guide to pricing, timelines, ownership, support, and how we
+            work. If your question is more specific, book a short discovery call.
+          </p>
+        </div>
+        <div className="faq-list">
+          {faqs.map((item, index) => (
+            <details key={item.question} open={index === 0}>
+              <summary>
+                <span>0{index + 1}</span>
+                {item.question}
+                <b aria-hidden="true">+</b>
+              </summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       <section className="policies section" id="policies">
         <div className="policies-intro">
           <p className="section-kicker">Working together</p>
@@ -775,6 +865,28 @@ export default function Home() {
               </p>
             </div>
           </details>
+
+          <details>
+            <summary>
+              <span>05</span>
+              Confidentiality & security
+              <b aria-hidden="true">+</b>
+            </summary>
+            <div>
+              <p>
+                Project access is limited to the people involved in delivering
+                the engagement. Credentials and sensitive configuration should
+                be shared through agreed secure channels and kept out of public
+                source-code repositories.
+              </p>
+              <p>
+                Environment separation, backups, access reviews, handover, and
+                credential rotation are agreed according to the needs of each
+                project. Reasonable non-disclosure agreements can be reviewed
+                before sensitive discovery begins.
+              </p>
+            </div>
+          </details>
         </div>
       </section>
 
@@ -789,13 +901,22 @@ export default function Home() {
           great outcome would look like.
         </p>
         <div className="contact-actions">
-          <a
-            className="button contact-button"
-            href="mailto:support@mynomp.com?subject=Let%27s%20build%20a%20project"
-          >
-            Email our team
-            <span aria-hidden="true">↗</span>
-          </a>
+          <div className="contact-primary-actions">
+            <a
+              className="button contact-button"
+              href="mailto:support@mynomp.com?subject=Let%27s%20build%20a%20project"
+            >
+              Email our team
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a
+              className="button discovery-button"
+              href="mailto:support@mynomp.com?subject=Book%20a%2030-minute%20WykSofts%20discovery%20call&body=Name%3A%0ACompany%3A%0ATime%20zone%3A%0APreferred%20dates%20and%20times%3A%0AWhat%20I%27d%20like%20to%20discuss%3A"
+            >
+              Book a discovery call
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
           <a className="contact-phone" href="tel:+254703285070">
             +254 703 285 070
           </a>
@@ -807,7 +928,14 @@ export default function Home() {
           >
             Chat on WhatsApp ↗
           </a>
-          <span className="office-location">Mirage Towers, Nairobi</span>
+          <a
+            className="office-location"
+            href="https://www.google.com/maps/search/?api=1&query=Mirage+Towers+Nairobi"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Mirage Towers, Nairobi · Get directions ↗
+          </a>
         </div>
       </section>
 
@@ -829,6 +957,7 @@ export default function Home() {
           <a href="#about">About</a>
           <a href="#clients">Clients</a>
           <a href="#careers">Careers</a>
+          <a href="#faq">FAQ</a>
         </div>
         <div className="footer-column">
           <h3>Work with us</h3>
@@ -841,10 +970,19 @@ export default function Home() {
           <a href="#policies">Terms</a>
           <a href="#policies">Cancellation</a>
           <a href="#policies">Privacy</a>
+          <a href="#policies">Security</a>
         </div>
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} WykSofts Inc. All rights reserved.</p>
-          <p>Mirage Towers, Nairobi</p>
+          <p>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Mirage+Towers+Nairobi"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Mirage Towers, Nairobi ↗
+            </a>
+          </p>
           <p>
             <a href="mailto:support@mynomp.com">support@mynomp.com</a>
             {" · "}
