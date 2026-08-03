@@ -49,6 +49,11 @@ test("server-renders the WykSofts landing page", async () => {
   assert.match(html, /Mynomp/);
   assert.match(html, /City BBQ App/);
   assert.match(html, /SlimChickens App/);
+  assert.match(html, /Mynomp Spark product mark/);
+  assert.match(html, /City Barbeque rewards and mobile ordering app interface/);
+  assert.match(html, /Slim Chickens application icon/);
+  assert.match(html, /Challenge/);
+  assert.match(html, /Delivered/);
   assert.match(html, /Selected clients/);
   assert.match(html, /Product website/);
   assert.match(html, /iOS &amp; iPadOS app/);
@@ -56,9 +61,12 @@ test("server-renders the WykSofts landing page", async () => {
   assert.match(html, /https:\/\/www\.mynomp\.com\//);
   assert.match(html, /https:\/\/apps\.apple\.com\/us\/app\/city-barbeque\/id979145837/);
   assert.match(html, /https:\/\/apps\.apple\.com\/us\/app\/slim-chickens\/id1244055810/);
-  assert.match(html, /Projects start from/);
-  assert.match(html, />100</);
+  assert.match(html, /From \$100/);
   assert.match(html, /Get a quotation/);
+  assert.match(html, /Build your quotation request/);
+  assert.match(html, /Continue by email/);
+  assert.match(html, /Continue on WhatsApp/);
+  assert.match(html, /wa\.me\/254703285070/);
   assert.match(html, /Careers at WykSofts/);
   assert.match(html, /Open to exceptional people/);
   assert.match(html, /Terms of engagement/);

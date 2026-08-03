@@ -56,6 +56,11 @@ await cp(new URL("../dist/client/assets/", import.meta.url), new URL("assets/", 
 });
 await cp(new URL("../public/og.png", import.meta.url), new URL("og.png", docsRoot));
 await cp(
+  new URL("../public/projects/", import.meta.url),
+  new URL("projects/", docsRoot),
+  { recursive: true },
+);
+await cp(
   new URL("../public/favicon.svg", import.meta.url),
   new URL("favicon.svg", docsRoot),
 );

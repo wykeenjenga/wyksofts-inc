@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 test("GitHub Pages export keeps the client-side hero interactive", async () => {
@@ -28,4 +28,10 @@ test("GitHub Pages export keeps the client-side hero interactive", async () => {
   assert.match(pageJavaScript, /delight customers/);
   assert.match(pageJavaScript, /simplify work/);
   assert.match(pageJavaScript, /onClick/);
+
+  await Promise.all([
+    access(new URL("../docs/projects/mynomp-mark.svg", import.meta.url)),
+    access(new URL("../docs/projects/city-barbeque.jpg", import.meta.url)),
+    access(new URL("../docs/projects/slim-chickens.jpg", import.meta.url)),
+  ]);
 });

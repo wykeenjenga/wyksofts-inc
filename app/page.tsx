@@ -1,6 +1,11 @@
 "use client";
 
-import { useRef, useState, type PointerEvent } from "react";
+import {
+  useRef,
+  useState,
+  type FormEvent,
+  type PointerEvent,
+} from "react";
 
 const services = [
   {
@@ -67,6 +72,11 @@ const projects = [
     summary:
       "An accountability-powered focus platform designed to turn work sessions into lasting momentum.",
     href: "https://www.mynomp.com/",
+    image: "./projects/mynomp-mark.svg",
+    imageAlt: "Mynomp Spark product mark",
+    challenge: "Turn focused work into a repeatable, social habit.",
+    delivered: "Product experience, accountability flows, and a responsive web platform.",
+    capabilities: ["Product design", "Web platform", "Focus experience"],
   },
   {
     number: "02",
@@ -75,6 +85,11 @@ const projects = [
     summary:
       "A customer-focused mobile experience designed around convenient ordering and brand engagement.",
     href: "https://apps.apple.com/us/app/city-barbeque/id979145837",
+    image: "./projects/city-barbeque.jpg",
+    imageAlt: "City Barbeque rewards and mobile ordering app interface",
+    challenge: "Make ordering, rewards, and repeat purchases feel effortless.",
+    delivered: "An iOS and iPadOS ordering experience with loyalty at its core.",
+    capabilities: ["iOS", "iPadOS", "Ordering", "Rewards"],
   },
   {
     number: "03",
@@ -83,6 +98,35 @@ const projects = [
     summary:
       "A polished restaurant app experience that brings menu discovery and customer interaction together.",
     href: "https://apps.apple.com/us/app/slim-chickens/id1244055810",
+    image: "./projects/slim-chickens.jpg",
+    imageAlt: "Slim Chickens application icon",
+    challenge: "Bring ordering, favourites, offers, and rewards into one experience.",
+    delivered: "A customer-facing iOS application designed for speed and repeat use.",
+    capabilities: ["iOS", "Mobile ordering", "Offers", "Loyalty"],
+  },
+];
+
+const packages = [
+  {
+    name: "Launch",
+    price: "From $100",
+    type: "Landing page or focused website",
+    description: "A focused digital launch for a clear offer, campaign, or early-stage business.",
+    items: ["Responsive build", "Core SEO setup", "Contact conversion path"],
+  },
+  {
+    name: "Grow",
+    price: "Scoped quotation",
+    type: "Business website or web application",
+    description: "A stronger web presence or workflow designed around business growth.",
+    items: ["Product strategy", "Custom interface", "Integrations & analytics"],
+  },
+  {
+    name: "Product",
+    price: "Scoped quotation",
+    type: "Mobile app or custom software",
+    description: "A complete product engagement for ambitious, operationally important ideas.",
+    items: ["Discovery & UX", "Software engineering", "Launch & support plan"],
   },
 ];
 
@@ -107,6 +151,27 @@ const heroOutcomes = [
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const [outcomeIndex, setOutcomeIndex] = useState(0);
+  const [quote, setQuote] = useState({
+    projectType: packages[0].type,
+    budget: "$100–$500",
+    timeline: "Within 1 month",
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const quoteMessage = [
+    "Hello WykSofts, I would like a quotation.",
+    "",
+    `Name: ${quote.name || "Not provided"}`,
+    `Email: ${quote.email || "Not provided"}`,
+    `Project type: ${quote.projectType}`,
+    `Budget: ${quote.budget}`,
+    `Timeline: ${quote.timeline}`,
+    `Project details: ${quote.message || "I would like to discuss the requirements."}`,
+  ].join("\n");
+
+  const whatsappQuoteHref = `https://wa.me/254703285070?text=${encodeURIComponent(quoteMessage)}`;
 
   function handleHeroPointerMove(event: PointerEvent<HTMLElement>) {
     if (event.pointerType !== "mouse") return;
@@ -138,6 +203,17 @@ export default function Home() {
 
   function cycleOutcome() {
     setOutcomeIndex((current) => (current + 1) % heroOutcomes.length);
+  }
+
+  function updateQuote(field: keyof typeof quote, value: string) {
+    setQuote((current) => ({ ...current, [field]: value }));
+  }
+
+  function handleQuoteSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    window.location.href = `mailto:support@mynomp.com?subject=${encodeURIComponent(
+      `WykSofts quotation — ${quote.projectType}`,
+    )}&body=${encodeURIComponent(quoteMessage)}`;
   }
 
   return (
@@ -281,28 +357,43 @@ export default function Home() {
 
         <div className="project-grid">
           {projects.map((project) => (
-            <a
-              className="project-card"
-              href={project.href}
-              key={project.name}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`View ${project.name} project`}
-            >
+            <article className="project-card" key={project.name}>
               <div className="project-meta">
                 <span>{project.number}</span>
-                <span>
-                  {project.type} <b aria-hidden="true">↗</b>
-                </span>
+                <span>{project.type}</span>
               </div>
-              <div className="project-monogram" aria-hidden="true">
-                {project.name.charAt(0)}
+              <div className={`project-visual project-visual-${project.number}`}>
+                <img src={project.image} alt={project.imageAlt} />
               </div>
-              <div>
+              <div className="project-body">
                 <h3>{project.name}</h3>
                 <p>{project.summary}</p>
+                <dl>
+                  <div>
+                    <dt>Challenge</dt>
+                    <dd>{project.challenge}</dd>
+                  </div>
+                  <div>
+                    <dt>Delivered</dt>
+                    <dd>{project.delivered}</dd>
+                  </div>
+                </dl>
+                <div className="project-capabilities" aria-label={`${project.name} capabilities`}>
+                  {project.capabilities.map((capability) => (
+                    <span key={capability}>{capability}</span>
+                  ))}
+                </div>
+                <a
+                  className="project-link"
+                  href={project.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`View ${project.name} live product`}
+                >
+                  View live product <b aria-hidden="true">↗</b>
+                </a>
               </div>
-            </a>
+            </article>
           ))}
         </div>
       </section>
@@ -430,35 +521,152 @@ export default function Home() {
       </section>
 
       <section className="pricing section" id="pricing">
-        <div className="pricing-copy">
+        <div className="pricing-heading">
           <p className="section-kicker">Simple starting point</p>
           <h2>Quality digital work, sized for where you are.</h2>
           <p>
-            Every project is different. Share what you need and we&apos;ll send a
-            clear, scope-based quotation with the deliverables, timeline, and
-            total cost.
+            Choose the closest starting point, then tell us about your project.
+            We&apos;ll respond with a clear scope, timeline, deliverables, and price.
           </p>
         </div>
 
-        <aside className="price-card">
-          <p>Projects start from</p>
-          <div className="price">
-            <span>$</span>
-            <strong>100</strong>
+        <div className="package-grid">
+          {packages.map((item, index) => (
+            <button
+              className={quote.projectType === item.type ? "package-card active" : "package-card"}
+              type="button"
+              key={item.name}
+              onClick={() => updateQuote("projectType", item.type)}
+              aria-pressed={quote.projectType === item.type}
+            >
+              <span className="package-number">0{index + 1}</span>
+              <h3>{item.name}</h3>
+              <strong>{item.price}</strong>
+              <p>{item.description}</p>
+              <ul>
+                {item.items.map((feature) => (
+                  <li key={feature}>{feature}</li>
+                ))}
+              </ul>
+              <span className="package-select">
+                {quote.projectType === item.type ? "Selected" : "Choose package"}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <div className="quote-builder" id="quote-builder">
+          <div className="quote-builder-intro">
+            <p className="section-kicker light">Project planner</p>
+            <h3>Build your quotation request.</h3>
+            <p>
+              This takes about two minutes. Your answers stay in your browser
+              until you choose email or WhatsApp—nothing is stored on this site.
+            </p>
+            <div className="quote-contact-note">
+              <span>Prefer to talk?</span>
+              <a href="tel:+254703285070">+254 703 285 070</a>
+            </div>
           </div>
-          <p>
-            A practical entry point for focused landing pages, small digital
-            improvements, and clearly scoped work.
-          </p>
-          <a
-            className="button quote-button"
-            href="mailto:support@mynomp.com?subject=Request%20a%20WykSofts%20quotation&body=Project%20type%3A%0AWhat%20you%20need%3A%0ATimeline%3A%0ABudget%3A"
-          >
-            Get a quotation
-            <span aria-hidden="true">↗</span>
-          </a>
-          <small>Final pricing depends on scope and requirements.</small>
-        </aside>
+
+          <form className="quote-form" onSubmit={handleQuoteSubmit}>
+            <label>
+              Project type
+              <select
+                value={quote.projectType}
+                onChange={(event) => updateQuote("projectType", event.target.value)}
+              >
+                {packages.map((item) => (
+                  <option key={item.type}>{item.type}</option>
+                ))}
+                <option>Maintenance or existing product improvements</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+
+            <div className="quote-form-row">
+              <label>
+                Approximate budget
+                <select
+                  value={quote.budget}
+                  onChange={(event) => updateQuote("budget", event.target.value)}
+                >
+                  <option>$100–$500</option>
+                  <option>$500–$2,000</option>
+                  <option>$2,000–$5,000</option>
+                  <option>$5,000+</option>
+                  <option>Help me estimate</option>
+                </select>
+              </label>
+              <label>
+                Preferred timeline
+                <select
+                  value={quote.timeline}
+                  onChange={(event) => updateQuote("timeline", event.target.value)}
+                >
+                  <option>Within 1 month</option>
+                  <option>1–3 months</option>
+                  <option>3–6 months</option>
+                  <option>Flexible</option>
+                </select>
+              </label>
+            </div>
+
+            <div className="quote-form-row">
+              <label>
+                Your name
+                <input
+                  type="text"
+                  value={quote.name}
+                  onChange={(event) => updateQuote("name", event.target.value)}
+                  autoComplete="name"
+                  required
+                />
+              </label>
+              <label>
+                Email address
+                <input
+                  type="email"
+                  value={quote.email}
+                  onChange={(event) => updateQuote("email", event.target.value)}
+                  autoComplete="email"
+                  required
+                />
+              </label>
+            </div>
+
+            <label>
+              What would you like to build?
+              <textarea
+                value={quote.message}
+                onChange={(event) => updateQuote("message", event.target.value)}
+                placeholder="Share the idea, current problem, important features, and what success looks like."
+                rows={5}
+                required
+              />
+            </label>
+
+            <div className="quote-actions">
+              <button className="button quote-button" type="submit">
+                Continue by email
+                <span aria-hidden="true">↗</span>
+              </button>
+              <a
+                className="button whatsapp-button"
+                href={whatsappQuoteHref}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Continue on WhatsApp
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <small>
+              This creates an enquiry, not a binding order. Final pricing depends
+              on scope and requirements.
+            </small>
+          </form>
+        </div>
       </section>
 
       <section className="policies section" id="policies">
@@ -471,7 +679,7 @@ export default function Home() {
             accepted by both parties; that signed document takes priority if
             anything differs.
           </p>
-          <span className="policy-date">Last updated 31 July 2026</span>
+          <span className="policy-date">Last updated 3 August 2026</span>
         </div>
 
         <div className="policy-list">
@@ -531,10 +739,11 @@ export default function Home() {
                 do not sell personal information.
               </p>
               <p>
-                This website currently has no onsite contact form or advertising
-                trackers. Email and telephone communications are also handled by
-                the providers you choose to use. Privacy questions can be sent
-                to support@mynomp.com.
+                The quotation builder works on your device and opens your chosen
+                email or WhatsApp application; this website does not store the
+                answers you type. Communications are then handled by the provider
+                you choose to use. Privacy questions can be sent to
+                support@mynomp.com.
               </p>
               <a
                 href="https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31"
@@ -589,6 +798,14 @@ export default function Home() {
           </a>
           <a className="contact-phone" href="tel:+254703285070">
             +254 703 285 070
+          </a>
+          <a
+            className="contact-whatsapp"
+            href="https://wa.me/254703285070?text=Hello%20WykSofts%2C%20I%20would%20like%20to%20discuss%20a%20project."
+            target="_blank"
+            rel="noreferrer"
+          >
+            Chat on WhatsApp ↗
           </a>
           <span className="office-location">Mirage Towers, Nairobi</span>
         </div>

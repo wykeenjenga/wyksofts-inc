@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  mynomp Spark mark — transparent variant.
+  Use on light or dark UI surfaces where the symbol stands alone.
+  Mint: #50D8B8 · Violet: #7667FF · Spark: #F5C84C
+-->
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">mynomp Spark mark</title>
+  <desc id="desc">A rounded two-arch mynomp monogram with a small gold spark.</desc>
+  <path d="M134.4 345.6V195.2c0-41.6 28.8-70.4 70.4-70.4s70.4 28.8 70.4 70.4v150.4"
+        fill="none" stroke="#50D8B8" stroke-width="48" stroke-linecap="round"/>
+  <path d="M275.2 345.6V230.4c0-41.6 28.8-70.4 70.4-70.4s70.4 28.8 70.4 70.4v115.2"
+        fill="none" stroke="#7667FF" stroke-width="48" stroke-linecap="round"/>
+  <path d="M387.2 96l16 38.4 41.6 16-41.6 16-16 41.6-16-41.6-41.6-16 41.6-16z"
+        fill="#F5C84C"/>
+</svg>
