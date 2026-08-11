@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render() {
+async function render(path = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("https://wyksofts.example/", {
+    new Request(`https://wyksofts.example${path}`, {
       headers: {
         accept: "text/html",
         host: "wyksofts.example",
@@ -43,27 +43,10 @@ test("server-renders the WykSofts landing page", async () => {
   assert.match(html, /Mobile apps/);
   assert.match(html, /Websites &amp; web apps/);
   assert.match(html, /Custom software/);
-  assert.match(html, /APIs &amp; integrations/);
-  assert.match(html, /AI &amp; cloud/);
   assert.match(html, /Mirage Towers, Nairobi/);
-  assert.match(html, /WykSofts in motion/);
-  assert.match(html, /Ideas become products/);
-  assert.match(html, /wyksofts-launch\.mp4/);
-  assert.match(html, /wyksofts-launch-poster\.jpg/);
-  assert.match(html, /Wycliff Njenga/);
-  assert.match(html, /Founder &amp; CEO/);
-  assert.match(html, /10\+/);
-  assert.match(html, /Wycliff Njenga, Founder and CEO of WykSofts Inc\./);
-  assert.match(html, /linkedin\.com\/in\/wycliff-njenga-5973b512a/);
-  assert.match(html, /github\.com\/wykeenjenga/);
   assert.match(html, /Mynomp/);
   assert.match(html, /City BBQ App/);
   assert.match(html, /SlimChickens App/);
-  assert.match(html, /Mynomp Spark product mark/);
-  assert.match(html, /City Barbeque rewards and mobile ordering app interface/);
-  assert.match(html, /Slim Chickens application icon/);
-  assert.match(html, /Challenge/);
-  assert.match(html, /Delivered/);
   assert.match(html, /Selected clients/);
   assert.match(html, /Product website/);
   assert.match(html, /iOS &amp; iPadOS app/);
@@ -71,35 +54,42 @@ test("server-renders the WykSofts landing page", async () => {
   assert.match(html, /https:\/\/www\.mynomp\.com\//);
   assert.match(html, /https:\/\/apps\.apple\.com\/us\/app\/city-barbeque\/id979145837/);
   assert.match(html, /https:\/\/apps\.apple\.com\/us\/app\/slim-chickens\/id1244055810/);
-  assert.match(html, /From \$100/);
-  assert.match(html, /Get a quotation/);
-  assert.match(html, /Build your quotation request/);
-  assert.match(html, /Request quotation/);
-  assert.match(html, /private review queue/);
-  assert.match(html, /Continue on WhatsApp/);
   assert.match(html, /wa\.me\/254703285070/);
-  assert.match(html, /Careers at WykSofts/);
-  assert.match(html, /Open to exceptional people/);
-  assert.match(html, /Terms of engagement/);
-  assert.match(html, /Project cancellation/);
-  assert.match(html, /Privacy &amp; data/);
-  assert.match(html, /Support &amp; warranties/);
-  assert.match(html, /Confidentiality &amp; security/);
-  assert.match(html, /Frequently asked questions/);
-  assert.match(html, /How much does a project cost/);
-  assert.match(html, /Who owns the finished work/);
   assert.match(html, /Book a discovery call/);
   assert.match(html, /Mirage\+Towers\+Nairobi/);
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /ProfessionalService/);
-  assert.match(html, /General applications are not a promise of immediate employment/);
   assert.match(html, /All rights reserved/);
-  assert.match(html, /href="#contact"/);
   assert.match(html, /mailto:hello@wyksoftsinc\.com/);
   assert.match(html, /tel:\+254703285070/);
   assert.match(html, /\+254 703 285 070/);
   assert.match(html, /https:\/\/wyksofts\.example\/og\.png/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
+});
+
+test("server-renders the separated professional content pages", async () => {
+  const [services, clients, pricing, about, faq, policies] = await Promise.all([
+    render("/services").then((response) => response.text()),
+    render("/clients").then((response) => response.text()),
+    render("/pricing").then((response) => response.text()),
+    render("/about").then((response) => response.text()),
+    render("/faq").then((response) => response.text()),
+    render("/policies").then((response) => response.text()),
+  ]);
+
+  assert.match(services, /APIs &amp; integrations/);
+  assert.match(services, /AI &amp; cloud/);
+  assert.match(clients, /Mynomp Spark product mark/);
+  assert.match(clients, /Challenge/);
+  assert.match(pricing, /From \$100/);
+  assert.match(pricing, /Build your quotation request/);
+  assert.match(pricing, /Continue on WhatsApp/);
+  assert.match(about, /Wycliff Njenga/);
+  assert.match(about, /WykSofts in motion/);
+  assert.match(about, /wyksofts-launch\.mp4/);
+  assert.match(faq, /How much does a project cost/);
+  assert.match(policies, /Terms of engagement/);
+  assert.match(policies, /Confidentiality &amp; security/);
 });
 
 test("keeps the finished site free of starter-preview files", async () => {
@@ -109,7 +99,8 @@ test("keeps the finished site free of starter-preview files", async () => {
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
-  assert.match(page, /WykSofts Inc\./);
+  assert.match(page, /SiteHeader/);
+  assert.match(page, /SiteFooter/);
   assert.match(layout, /generateMetadata/);
   assert.match(layout, /og\.png/);
   assert.match(packageJson, /"name": "wyksofts-landing-page"/);

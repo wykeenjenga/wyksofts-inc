@@ -17,7 +17,7 @@ test("GitHub Pages export keeps the client-side hero interactive", async () => {
   assert.doesNotMatch(html, /["']\/assets\//);
 
   const pageAsset = html.match(
-    /href="\.\/assets\/(page-[^"]+\.js)"/i,
+    /href="\.\/assets\/(HomeHero-[^"]+\.js)"/i,
   )?.[1];
   assert.ok(pageAsset, "expected the interactive page bundle to be linked");
 
@@ -38,9 +38,15 @@ test("GitHub Pages export keeps the client-side hero interactive", async () => {
   ]);
 });
 
-test("exports inquiry, booking, careers, and protected admin pages", async () => {
-  const [home, inquiry, booking, careers, careerSource, admin, resetPassword] = await Promise.all([
+test("exports the marketing site, inquiry flows, careers, and protected admin pages", async () => {
+  const [home, services, clients, pricing, about, faq, policies, inquiry, booking, careers, careerSource, admin, resetPassword] = await Promise.all([
     readFile(new URL("../docs/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../docs/services/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../docs/clients/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../docs/pricing/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../docs/about/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../docs/faq/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../docs/policies/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/inquiry/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/book/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/careers/index.html", import.meta.url), "utf8"),
@@ -49,10 +55,23 @@ test("exports inquiry, booking, careers, and protected admin pages", async () =>
     readFile(new URL("../docs/admin/reset-password/index.html", import.meta.url), "utf8"),
   ]);
 
+  assert.match(home, /Product thinking from idea to launch/);
+  assert.match(home, /href="\.\/services\//);
+  assert.doesNotMatch(home, /Frequently asked questions/);
+  assert.match(services, /Digital products, designed and engineered as one/);
+  assert.match(services, /Clear thinking\. Close collaboration/);
+  assert.match(clients, /Products made for people to use/);
+  assert.match(clients, /SlimChickens App/);
+  assert.match(pricing, /Build your quotation request/);
+  assert.match(pricing, /Request quotation/);
+  assert.match(about, /Wycliff Njenga/);
+  assert.match(about, /Download launch film/);
+  assert.match(faq, /Good questions deserve clear answers/);
+  assert.match(policies, /Project cancellation/);
   assert.match(inquiry, /Tell us what you want to build/);
   assert.match(inquiry, /Send project inquiry/);
   assert.match(inquiry, /\.\.\/assets\/index-/);
-  assert.match(home, /href="\/book\/"/);
+  assert.match(home, /href="\.\/book\/"/);
   assert.match(booking, /clearest next move/);
   assert.match(booking, /Request discovery call/);
   assert.match(booking, /\.\.\/assets\/index-/);

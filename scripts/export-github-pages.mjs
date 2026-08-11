@@ -8,6 +8,12 @@ const { default: worker } = await import(
 
 const routes = [
   { path: "/", output: "index.html", prefix: "./" },
+  { path: "/services", output: "services/index.html", prefix: "../" },
+  { path: "/clients", output: "clients/index.html", prefix: "../" },
+  { path: "/pricing", output: "pricing/index.html", prefix: "../" },
+  { path: "/about", output: "about/index.html", prefix: "../" },
+  { path: "/faq", output: "faq/index.html", prefix: "../" },
+  { path: "/policies", output: "policies/index.html", prefix: "../" },
   { path: "/inquiry", output: "inquiry/index.html", prefix: "../" },
   { path: "/book", output: "book/index.html", prefix: "../" },
   { path: "/careers", output: "careers/index.html", prefix: "../" },
@@ -87,6 +93,11 @@ for (const route of routes) {
     .replaceAll("https://wyksofts.example/apple-touch-icon.png", `${route.prefix}apple-touch-icon.png`)
     .replaceAll('href="/brand/', `href="${route.prefix}brand/`)
     .replaceAll('src="/brand/', `src="${route.prefix}brand/`)
+    .replaceAll('href="/projects/', `href="${route.prefix}projects/`)
+    .replaceAll('src="/projects/', `src="${route.prefix}projects/`)
+    .replaceAll('href="/media/', `href="${route.prefix}media/`)
+    .replaceAll('src="/media/', `src="${route.prefix}media/`)
+    .replaceAll('href="/', `href="${route.prefix}`)
     .replaceAll("<!-- -->", "");
 
   if (pagesOrigin) {

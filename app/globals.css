@@ -2008,6 +2008,223 @@ a {
   justify-self: end;
 }
 
+/* Multi-page marketing system */
+.marketing-page {
+  min-height: 100vh;
+}
+
+.page-hero {
+  background-image:
+    linear-gradient(to right, rgba(9, 9, 9, 0.075) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(9, 9, 9, 0.05) 1px, transparent 1px);
+  background-size: 25% 100%, 100% 92px;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 38px;
+  grid-template-columns: minmax(140px, 0.35fr) minmax(420px, 1.15fr) minmax(260px, 0.5fr);
+  min-height: 570px;
+  padding: clamp(86px, 10vw, 150px) clamp(24px, 4vw, 72px) clamp(70px, 8vw, 120px);
+}
+
+.page-hero h1 {
+  font-size: clamp(58px, 7.8vw, 126px);
+  font-weight: 760;
+  letter-spacing: -0.075em;
+  line-height: 0.88;
+  margin: 0;
+  max-width: 1050px;
+}
+
+.page-hero > p:last-child {
+  align-self: end;
+  border-left: 1px solid var(--line);
+  color: var(--muted);
+  font-size: clamp(16px, 1.35vw, 20px);
+  line-height: 1.58;
+  margin: 0;
+  padding: 26px 0 0 28px;
+}
+
+.home-hero {
+  min-height: min(860px, calc(100svh - 88px));
+}
+
+.home-services {
+  display: grid;
+  gap: clamp(54px, 8vw, 130px);
+  grid-template-columns: minmax(300px, 0.7fr) minmax(500px, 1.3fr);
+}
+
+.home-section-lead h2,
+.home-proof h2,
+.home-cta h2,
+.page-cta h2 {
+  font-size: clamp(46px, 6vw, 92px);
+  font-weight: 740;
+  letter-spacing: -0.068em;
+  line-height: 0.94;
+  margin: 30px 0 26px;
+}
+
+.home-section-lead > p:not(.section-kicker),
+.home-proof-copy > p:not(.section-kicker),
+.home-cta > p:not(.section-kicker) {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+  max-width: 560px;
+}
+
+.home-section-lead .text-link {
+  margin-top: 32px;
+}
+
+.home-service-grid {
+  border-top: 1px solid var(--line);
+}
+
+.home-service-grid article {
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 22px;
+  grid-template-columns: 42px minmax(170px, 0.65fr) 1fr;
+  padding: 34px 0;
+}
+
+.home-service-grid article > span {
+  color: var(--orange);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 9px;
+}
+
+.home-service-grid h3 {
+  font-size: clamp(23px, 2.4vw, 36px);
+  letter-spacing: -0.045em;
+  margin: 0;
+}
+
+.home-service-grid p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.home-proof {
+  background: var(--ink);
+  color: var(--paper);
+  display: grid;
+  gap: clamp(60px, 9vw, 150px);
+  grid-template-columns: minmax(300px, 0.7fr) minmax(480px, 1.3fr);
+}
+
+.home-proof-copy .button {
+  margin-top: 28px;
+}
+
+.home-client-list {
+  border-top: 1px solid rgba(243, 240, 232, 0.25);
+}
+
+.home-client-list a {
+  align-items: center;
+  border-bottom: 1px solid rgba(243, 240, 232, 0.25);
+  display: grid;
+  gap: 22px;
+  grid-template-columns: 34px 1fr 0.8fr 24px;
+  min-height: 112px;
+  transition: color 180ms ease, padding 180ms ease;
+}
+
+.home-client-list a:hover,
+.home-client-list a:focus-visible {
+  color: var(--orange);
+  padding-left: 12px;
+}
+
+.home-client-list span,
+.home-client-list small {
+  color: #8f8a81;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.home-client-list strong {
+  font-size: clamp(24px, 2.7vw, 42px);
+  letter-spacing: -0.045em;
+}
+
+.home-cta {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 650px;
+  justify-content: center;
+  text-align: center;
+}
+
+.home-cta > div,
+.page-cta > div {
+  align-items: center;
+  display: flex;
+  gap: 32px;
+  margin-top: 30px;
+}
+
+.page-cta {
+  align-items: start;
+  background: var(--orange);
+  display: grid;
+  gap: 34px;
+  grid-template-columns: minmax(160px, 0.35fr) minmax(440px, 1.15fr) minmax(260px, 0.5fr);
+}
+
+.page-cta .section-kicker {
+  color: var(--ink);
+}
+
+.page-cta h2 {
+  margin: 0;
+}
+
+.page-cta > div {
+  align-self: end;
+  align-items: flex-start;
+  flex-direction: column;
+  margin: 0;
+}
+
+.page-cta .button-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.faq-page-content,
+.policies-page-content {
+  padding-top: 80px;
+}
+
+.faq-page-content .faq-heading,
+.policies-page-content .policies-intro {
+  top: 120px;
+}
+
+.faq-page-content .faq-heading > p,
+.policies-page-content .policies-intro > p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 22px 0 0;
+}
+
+.faq-page-content .faq-heading a,
+.policies-page-content .policies-intro a {
+  color: var(--orange);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 @keyframes pulse {
   from {
     opacity: 0.7;
@@ -2101,17 +2318,39 @@ a {
     gap: 44px 28px;
     grid-template-columns: 1.4fr repeat(3, 0.6fr);
   }
+
+  .page-hero,
+  .page-cta {
+    grid-template-columns: 0.35fr 1.15fr;
+  }
+
+  .page-hero > p:last-child,
+  .page-cta > div {
+    grid-column: 2;
+  }
 }
 
 @media (max-width: 760px) {
   .site-header {
+    gap: 12px;
     grid-template-columns: 1fr auto;
-    min-height: 72px;
+    min-height: 76px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .main-nav {
-    display: none;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 22px;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0 -20px;
+    overflow-x: auto;
+    padding: 12px 20px 14px;
   }
+
+  .main-nav a { flex: 0 0 auto; }
 
   .nav-cta {
     font-size: 0;
@@ -2119,6 +2358,56 @@ a {
 
   .nav-cta span {
     font-size: 13px;
+  }
+
+  .page-hero,
+  .page-cta,
+  .home-services,
+  .home-proof {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero {
+    gap: 30px;
+    min-height: 0;
+    padding-top: 70px;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(52px, 16vw, 82px);
+  }
+
+  .page-hero > p:last-child,
+  .page-cta > div {
+    grid-column: auto;
+  }
+
+  .page-hero > p:last-child {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 24px 0 0;
+  }
+
+  .home-service-grid article {
+    grid-template-columns: 34px 1fr;
+  }
+
+  .home-service-grid p {
+    grid-column: 2;
+  }
+
+  .home-client-list a {
+    gap: 14px;
+    grid-template-columns: 30px 1fr 22px;
+  }
+
+  .home-client-list small {
+    display: none;
+  }
+
+  .home-cta > div {
+    align-items: center;
+    flex-direction: column;
   }
 
   .hero {
