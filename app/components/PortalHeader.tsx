@@ -1,8 +1,10 @@
+import { BrandMark } from "./BrandMark";
+
 export function PortalHeader({ label }: { label: string }) {
   return (
     <header className="portal-header">
       <a className="brand" href="/" aria-label="WykSofts Inc. home">
-        <span className="brand-mark" aria-hidden="true">W</span>
+        <BrandMark />
         <span>WykSofts Inc.</span>
       </a>
       <span className="portal-header-label">{label}</span>

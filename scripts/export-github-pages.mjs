@@ -50,6 +50,11 @@ await cp(new URL("../dist/client/assets/", import.meta.url), new URL("assets/", 
 });
 await cp(new URL("../public/og.png", import.meta.url), new URL("og.png", docsRoot));
 await cp(
+  new URL("../public/brand/", import.meta.url),
+  new URL("brand/", docsRoot),
+  { recursive: true },
+);
+await cp(
   new URL("../public/projects/", import.meta.url),
   new URL("projects/", docsRoot),
   { recursive: true },
@@ -59,9 +64,10 @@ await cp(
   new URL("media/", docsRoot),
   { recursive: true },
 );
+await cp(new URL("../public/favicon.png", import.meta.url), new URL("favicon.png", docsRoot));
 await cp(
-  new URL("../public/favicon.svg", import.meta.url),
-  new URL("favicon.svg", docsRoot),
+  new URL("../public/apple-touch-icon.png", import.meta.url),
+  new URL("apple-touch-icon.png", docsRoot),
 );
 
 const assetFiles = await readdir(new URL("assets/", docsRoot));
@@ -76,7 +82,10 @@ for (const route of routes) {
   let html = await renderRoute(route.path);
   html = html
     .replaceAll("/assets/", `${route.prefix}assets/`)
-    .replaceAll('href="/favicon.svg"', `href="${route.prefix}favicon.svg"`)
+    .replaceAll("https://wyksofts.example/favicon.png", `${route.prefix}favicon.png`)
+    .replaceAll("https://wyksofts.example/apple-touch-icon.png", `${route.prefix}apple-touch-icon.png`)
+    .replaceAll('href="/brand/', `href="${route.prefix}brand/`)
+    .replaceAll('src="/brand/', `src="${route.prefix}brand/`)
     .replaceAll("<!-- -->", "");
 
   if (pagesOrigin) {

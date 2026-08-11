@@ -36,6 +36,10 @@ export async function generateMetadata(): Promise<Metadata> {
       "Nairobi software company",
       "AI solutions",
     ],
+    icons: {
+      icon: [{ url: "/favicon.png", sizes: "64x64", type: "image/png" }],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    },
     openGraph: {
       title: "WykSofts Inc. | Digital products that move businesses forward",
       description:

@@ -56,8 +56,11 @@ test("exports inquiry, careers, and protected admin pages", async () => {
   assert.match(admin, /Secure sign in/);
   assert.match(admin, /hello@wyksoftsinc\.com/);
   assert.match(admin, /Forgot password/);
+  assert.match(admin, /\.\.\/brand\/wyksofts-mark\.png/);
+  assert.match(admin, /\.\.\/favicon\.png/);
   assert.match(admin, /\.\.\/assets\/index-/);
   assert.match(resetPassword, /Reset your password/);
   assert.match(resetPassword, /Checking link/);
   assert.match(resetPassword, /\.\.\/\.\.\/assets\/index-/);
+  assert.match(resetPassword, /\.\.\/\.\.\/brand\/wyksofts-mark\.png/);
 });

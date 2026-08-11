@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { BrandMark } from "../components/BrandMark";
 import { PortalHeader } from "../components/PortalHeader";
 import { getSupabaseBrowserClient } from "../../lib/supabase";
 
@@ -107,7 +108,7 @@ export default function AdminPage() {
         <section className="admin-login-wrap">
           <div className="admin-login-copy"><p className="section-kicker">Private workspace</p><h1>WykSofts Admin</h1><p>Review project inquiries and career applications from one focused workspace.</p></div>
           <div className="admin-login-card">
-            {authState === "setup" ? <><h2>Connect Supabase</h2><p>Add the project URL and publishable key to enable secure admin access.</p></> : authState === "denied" ? <><h2>Access restricted</h2><p>This account is signed in but does not have WykSofts administrator access.</p><button className="portal-submit" onClick={() => supabase?.auth.signOut()}>Sign out</button></> : <form onSubmit={login}><span className="admin-lock">W</span><h2>Secure sign in</h2><p>Authorized WykSofts administrators only.</p><label>Email<input name="email" type="email" autoComplete="email" defaultValue="hello@wyksoftsinc.com" required /></label><label>Password<input name="password" type="password" autoComplete="current-password" required /></label><button className="admin-forgot" type="button" onClick={() => void requestPasswordReset()} disabled={resetState === "sending"}>{resetState === "sending" ? "Sending reset link…" : "Forgot password?"}</button>{authError && <p className="portal-error">{authError}</p>}{resetState === "sent" && <p className="admin-reset-notice" role="status">Reset link sent to hello@wyksoftsinc.com. Open the email on this device and choose a new password.</p>}{resetState === "error" && <p className="portal-error" role="alert">We could not send the reset email. Please try again shortly.</p>}<button className="portal-submit" type="submit">Enter dashboard <span>↗</span></button></form>}
+            {authState === "setup" ? <><h2>Connect Supabase</h2><p>Add the project URL and publishable key to enable secure admin access.</p></> : authState === "denied" ? <><h2>Access restricted</h2><p>This account is signed in but does not have WykSofts administrator access.</p><button className="portal-submit" onClick={() => supabase?.auth.signOut()}>Sign out</button></> : <form onSubmit={login}><BrandMark className="admin-lock" /><h2>Secure sign in</h2><p>Authorized WykSofts administrators only.</p><label>Email<input name="email" type="email" autoComplete="email" defaultValue="hello@wyksoftsinc.com" required /></label><label>Password<input name="password" type="password" autoComplete="current-password" required /></label><button className="admin-forgot" type="button" onClick={() => void requestPasswordReset()} disabled={resetState === "sending"}>{resetState === "sending" ? "Sending reset link…" : "Forgot password?"}</button>{authError && <p className="portal-error">{authError}</p>}{resetState === "sent" && <p className="admin-reset-notice" role="status">Reset link sent to hello@wyksoftsinc.com. Open the email on this device and choose a new password.</p>}{resetState === "error" && <p className="portal-error" role="alert">We could not send the reset email. Please try again shortly.</p>}<button className="portal-submit" type="submit">Enter dashboard <span>↗</span></button></form>}
           </div>
         </section>
       </main>
@@ -117,7 +118,7 @@ export default function AdminPage() {
   return (
     <main className="admin-shell">
       <aside className="admin-sidebar">
-        <a className="brand admin-brand" href="/"><span className="brand-mark">W</span><span>WykSofts</span></a>
+        <a className="brand admin-brand" href="/"><BrandMark /><span>WykSofts</span></a>
         <nav aria-label="Admin navigation">
           <button className={tab === "inquiries" ? "active" : ""} onClick={() => { setTab("inquiries"); setSelectedId(null); }}><span>01</span>Inquiries <b>{inquiries.length}</b></button>
           <button className={tab === "applications" ? "active" : ""} onClick={() => { setTab("applications"); setSelectedId(null); }}><span>02</span>Applications <b>{applications.length}</b></button>

@@ -6,6 +6,7 @@ import {
   type FormEvent,
   type PointerEvent,
 } from "react";
+import { BrandMark } from "./components/BrandMark";
 import { getSupabaseBrowserClient } from "../lib/supabase";
 
 const services = [
@@ -316,9 +317,7 @@ export default function Home() {
     <main>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="WykSofts Inc. home">
-          <span className="brand-mark" aria-hidden="true">
-            W
-          </span>
+          <BrandMark />
           <span>WykSofts Inc.</span>
         </a>
 
@@ -1078,9 +1077,7 @@ export default function Home() {
       <footer className="site-footer">
         <div className="footer-overview">
           <a className="brand footer-brand" href="#top">
-            <span className="brand-mark" aria-hidden="true">
-              W
-            </span>
+            <BrandMark />
             <span>WykSofts Inc.</span>
           </a>
           <p>
