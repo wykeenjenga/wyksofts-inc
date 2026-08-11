@@ -42,6 +42,15 @@ export default function AdminPage() {
     return () => data.subscription.unsubscribe();
   }, [supabase]);
 
+  useEffect(() => {
+    const recovery = new URLSearchParams(window.location.search).get("recovery");
+    if (recovery === "expired" || recovery === "invalid") {
+      setResetError("Your previous recovery link could not be used. Select Forgot password? to request a fresh WykSofts email.");
+      setResetState("error");
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
   async function checkAccess() {
     if (!supabase) return;
     const { data, error } = await supabase.auth.getClaims();

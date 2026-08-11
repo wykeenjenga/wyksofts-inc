@@ -5,7 +5,19 @@ import { BrandMark } from "../../components/BrandMark";
 import { PortalHeader } from "../../components/PortalHeader";
 import { getSupabaseBrowserClient } from "../../../lib/supabase";
 
-type RecoveryState = "loading" | "ready" | "invalid" | "setup" | "success";
+type RecoveryState = "loading" | "ready" | "expired" | "invalid" | "setup" | "success";
+
+function recoveryProblemFromUrl() {
+  const query = new URLSearchParams(window.location.search);
+  const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+  const code = query.get("error_code") ?? hash.get("error_code") ?? "";
+  const description = query.get("error_description") ?? hash.get("error_description") ?? "";
+  const error = query.get("error") ?? hash.get("error") ?? "";
+
+  if (code === "otp_expired" || /expired|already been used/i.test(description)) return "expired";
+  if (error || code || description) return "invalid";
+  return null;
+}
 
 export default function ResetPasswordPage() {
   const supabase = getSupabaseBrowserClient();
@@ -15,6 +27,12 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     if (!supabase) return;
+
+    const recoveryProblem = recoveryProblemFromUrl();
+    if (recoveryProblem) {
+      setState(recoveryProblem);
+      return;
+    }
 
     async function confirmRecoverySession() {
       const { data, error } = await supabase.auth.getClaims();
@@ -33,8 +51,11 @@ export default function ResetPasswordPage() {
       }
     });
 
-    void confirmRecoverySession();
-    return () => data.subscription.unsubscribe();
+    const timer = window.setTimeout(() => void confirmRecoverySession(), 250);
+    return () => {
+      window.clearTimeout(timer);
+      data.subscription.unsubscribe();
+    };
   }, [supabase]);
 
   async function updatePassword(event: FormEvent<HTMLFormElement>) {
@@ -80,7 +101,8 @@ export default function ResetPasswordPage() {
         <div className="admin-login-card">
           {state === "loading" && <div><BrandMark className="admin-lock" /><h2>Checking link…</h2><p>We are securely validating your recovery session.</p></div>}
           {state === "setup" && <div><BrandMark className="admin-lock" /><h2>Recovery unavailable</h2><p>The authentication connection is not configured.</p></div>}
-          {state === "invalid" && <div><BrandMark className="admin-lock" /><h2>Request a reset link</h2><p>Open this page from the password-reset email. Recovery links are single-use and expire for your protection.</p><a className="portal-submit" href="/admin/">Return to admin sign in <span>↗</span></a></div>}
+          {state === "expired" && <div><BrandMark className="admin-lock" /><p className="section-kicker">Link expired</p><h2>This recovery link has expired.</h2><p>Password links are single-use and time-limited. If you already opened this link, request a fresh one from the sign-in page.</p><a className="portal-submit" href="/admin/?recovery=expired">Request a new link <span>↗</span></a></div>}
+          {state === "invalid" && <div><BrandMark className="admin-lock" /><p className="section-kicker">Link unavailable</p><h2>This recovery link cannot be used.</h2><p>The link may be incomplete, already used, or intended for a different account. Request a fresh WykSofts recovery email.</p><a className="portal-submit" href="/admin/?recovery=invalid">Request a new link <span>↗</span></a></div>}
           {state === "success" && <div><span className="admin-success-mark">✓</span><h2>Password updated</h2><p>Your new password is ready. You can now sign in to the WykSofts dashboard.</p><a className="portal-submit" href="/admin/">Continue to sign in <span>↗</span></a></div>}
           {state === "ready" && <form onSubmit={updatePassword}><BrandMark className="admin-lock" /><h2>Choose a new password</h2><p>Use at least 12 characters and avoid reusing a password from another account.</p><label>New password<input name="password" type="password" autoComplete="new-password" minLength={12} required /></label><label>Confirm new password<input name="confirmation" type="password" autoComplete="new-password" minLength={12} required /></label>{errorMessage && <p className="portal-error" role="alert">{errorMessage}</p>}<button className="portal-submit" type="submit" disabled={saving}>{saving ? "Updating password…" : "Set new password"}<span>↗</span></button></form>}
         </div>

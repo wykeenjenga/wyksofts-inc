@@ -64,3 +64,22 @@ test("exports inquiry, careers, and protected admin pages", async () => {
   assert.match(resetPassword, /\.\.\/\.\.\/assets\/index-/);
   assert.match(resetPassword, /\.\.\/\.\.\/brand\/wyksofts-mark\.png/);
 });
+
+test("covers recovery failures and ships WykSofts email templates", async () => {
+  const [resetSource, recoveryEmail, confirmationEmail] = await Promise.all([
+    readFile(new URL("../app/admin/reset-password/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../supabase/email-templates/recovery.html", import.meta.url), "utf8"),
+    readFile(new URL("../supabase/email-templates/confirmation.html", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(resetSource, /otp_expired/);
+  assert.match(resetSource, /already been used/);
+  assert.match(resetSource, /This recovery link has expired/);
+  assert.match(resetSource, /This recovery link cannot be used/);
+  assert.match(resetSource, /Password updated/);
+  assert.match(recoveryEmail, /Reset your WykSofts password/);
+  assert.match(recoveryEmail, /\{\{ \.ConfirmationURL \}\}/);
+  assert.match(recoveryEmail, /hello@wyksoftsinc\.com/);
+  assert.match(confirmationEmail, /Confirm your administrator account/);
+  assert.doesNotMatch(`${recoveryEmail}${confirmationEmail}`, /nomp|support@mynomp/i);
+});
