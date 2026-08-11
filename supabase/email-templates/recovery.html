@@ -1,52 +1,60 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Reset your WykSofts password</title>
-  </head>
-  <body style="margin:0;background:#171717;font-family:Arial,Helvetica,sans-serif;color:#111111;">
-    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#171717;padding:32px 12px;">
-      <tr>
-        <td align="center">
-          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:640px;background:#f4f0e8;border-collapse:collapse;">
-            <tr>
-              <td style="background:#ff5a0a;padding:34px 44px;color:#090909;">
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
-                  <tr>
-                    <td style="font-size:13px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;">WykSofts Inc.</td>
-                    <td align="right" style="font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Secure admin</td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:48px 44px 24px;">
-                <div style="width:44px;height:6px;background:#ff5a0a;margin-bottom:28px;"></div>
-                <h1 style="margin:0 0 18px;font-size:36px;line-height:1.08;font-weight:700;letter-spacing:-1.2px;">Reset your password.</h1>
-                <p style="margin:0;color:#625f58;font-size:17px;line-height:1.65;">We received a request to reset the password for the WykSofts administrator account. Use the secure button below to choose a new password.</p>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:12px 44px 28px;">
-                <a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#080808;color:#ffffff;text-decoration:none;font-size:16px;font-weight:700;padding:18px 26px;border-left:6px solid #ff5a0a;">Choose a new password &nbsp;→</a>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:0 44px 44px;">
-                <div style="border-top:1px solid #cbc5ba;padding-top:24px;color:#777269;font-size:13px;line-height:1.65;">
-                  <strong style="color:#111111;">This link is single-use and expires in 1 hour.</strong><br>
-                  If you did not request this change, ignore this email. Your password has not changed.<br><br>
-                  Need help? <a href="mailto:hello@wyksoftsinc.com" style="color:#d84600;font-weight:700;">hello@wyksoftsinc.com</a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td style="background:#080808;padding:22px 44px;color:#a9a49b;font-size:11px;letter-spacing:1px;text-transform:uppercase;">WykSofts Inc. · Mirage Towers, Nairobi</td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" /><title>Reset your WykSofts password</title></head>
+<body style="margin:0;padding:0;background-color:#f4f0e8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:40px 16px;">
+  <tr><td align="center">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;">
+
+      <!-- Header -->
+      <tr><td style="background:#0a0a0a;padding:32px 24px;border-radius:16px 16px 0 0;text-align:center;">
+        <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 10px;">
+          <tr>
+            <td style="vertical-align:middle;padding-right:12px;">
+              <img src="https://wyksoftsinc.com/brand/wyksofts-mark.png"
+                  alt="WykSofts Inc." width="36" height="45"
+                  style="display:block;object-fit:contain;" />
+            </td>
+            <td style="vertical-align:middle;text-align:left;">
+              <h1 style="margin:0;color:#ffffff;font-size:23px;font-weight:800;letter-spacing:-0.5px;line-height:1;">WykSofts Inc.</h1>
+            </td>
+          </tr>
+        </table>
+        <p style="margin:0;color:rgba(255,255,255,0.62);font-size:11px;letter-spacing:1.6px;text-transform:uppercase;">software development &amp; digital solutions</p>
+      </td></tr>
+
+      <!-- Body -->
+      <tr><td style="background:#faf7f1;padding:40px 32px;border-radius:0 0 16px 16px;">
+        <div style="width:40px;height:5px;background:#ff5a0a;margin:0 0 24px;"></div>
+        <h2 style="margin:0 0 12px;font-size:22px;font-weight:750;color:#111111;letter-spacing:-0.3px;">Reset your password</h2>
+        <p style="margin:0 0 32px;font-size:15px;color:#68645e;line-height:1.6;">
+          We received a request to reset the password for your WykSofts administrator account. Click below to choose a new password.
+        </p>
+
+        <!-- CTA -->
+        <div style="text-align:center;margin-bottom:32px;">
+          <a href="{{ .ConfirmationURL }}"
+             style="display:inline-block;background:#ff5a0a;color:#111111;font-size:15px;font-weight:800;text-decoration:none;padding:16px 40px;border-radius:10px;">
+            Reset my password →
+          </a>
+        </div>
+
+        <!-- Expiry notice -->
+        <div style="background:#ffffff;border:1.5px solid #ddd7cd;border-radius:14px;padding:20px 24px;margin-bottom:24px;text-align:center;">
+          <p style="margin:0;font-size:13px;color:#958f86;">⏱ This link expires in <strong style="color:#111111;">1 hour</strong></p>
+        </div>
+
+        <p style="margin:0;font-size:12px;color:#918d86;text-align:center;line-height:1.6;">
+          Didn't request a password reset? Ignore this email — your password hasn't changed.<br/>
+          Need help? <a href="mailto:hello@wyksoftsinc.com" style="color:#d94700;text-decoration:none;font-weight:700;">hello@wyksoftsinc.com</a>
+        </p>
+      </td></tr>
+
+      <tr><td style="padding-top:20px;text-align:center;">
+        <p style="margin:0;font-size:11px;color:#9d978e;">© 2026 WykSofts Inc. · <a href="https://wyksoftsinc.com" style="color:#9d978e;text-decoration:none;">wyksoftsinc.com</a></p>
+      </td></tr>
     </table>
-  </body>
+  </td></tr>
+</table>
+</body>
 </html>
