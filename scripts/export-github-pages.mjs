@@ -11,6 +11,7 @@ const routes = [
   { path: "/inquiry", output: "inquiry/index.html", prefix: "../" },
   { path: "/careers", output: "careers/index.html", prefix: "../" },
   { path: "/admin", output: "admin/index.html", prefix: "../" },
+  { path: "/admin/reset-password", output: "admin/reset-password/index.html", prefix: "../../" },
 ];
 
 async function renderRoute(path) {

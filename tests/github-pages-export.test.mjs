@@ -39,10 +39,11 @@ test("GitHub Pages export keeps the client-side hero interactive", async () => {
 });
 
 test("exports inquiry, careers, and protected admin pages", async () => {
-  const [inquiry, careers, admin] = await Promise.all([
+  const [inquiry, careers, admin, resetPassword] = await Promise.all([
     readFile(new URL("../docs/inquiry/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/careers/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/admin/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../docs/admin/reset-password/index.html", import.meta.url), "utf8"),
   ]);
 
   assert.match(inquiry, /Tell us what you want to build/);
@@ -54,5 +55,9 @@ test("exports inquiry, careers, and protected admin pages", async () => {
   assert.match(admin, /WykSofts Admin/);
   assert.match(admin, /Secure sign in/);
   assert.match(admin, /hello@wyksoftsinc\.com/);
+  assert.match(admin, /Forgot password/);
   assert.match(admin, /\.\.\/assets\/index-/);
+  assert.match(resetPassword, /Reset your password/);
+  assert.match(resetPassword, /Checking link/);
+  assert.match(resetPassword, /\.\.\/\.\.\/assets\/index-/);
 });

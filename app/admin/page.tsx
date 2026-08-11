@@ -31,6 +31,7 @@ export default function AdminPage() {
   const [filter, setFilter] = useState("all");
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState("");
+  const [resetState, setResetState] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   useEffect(() => {
     if (!supabase) return;
@@ -72,6 +73,19 @@ export default function AdminPage() {
     if (error) setAuthError("The email or password was not accepted.");
   }
 
+  async function requestPasswordReset() {
+    if (!supabase || resetState === "sending") return;
+    setResetState("sending");
+    setAuthError("");
+
+    const { error } = await supabase.auth.resetPasswordForEmail(
+      "hello@wyksoftsinc.com",
+      { redirectTo: `${window.location.origin}/admin/reset-password/` },
+    );
+
+    setResetState(error ? "error" : "sent");
+  }
+
   async function updateRecord(item: RecordItem, patch: { status?: string; admin_notes?: string | null }) {
     if (!supabase) return;
     const table = tab === "inquiries" ? "wyksofts_inquiries" : "wyksofts_job_applications";
@@ -93,7 +107,7 @@ export default function AdminPage() {
         <section className="admin-login-wrap">
           <div className="admin-login-copy"><p className="section-kicker">Private workspace</p><h1>WykSofts Admin</h1><p>Review project inquiries and career applications from one focused workspace.</p></div>
           <div className="admin-login-card">
-            {authState === "setup" ? <><h2>Connect Supabase</h2><p>Add the project URL and publishable key to enable secure admin access.</p></> : authState === "denied" ? <><h2>Access restricted</h2><p>This account is signed in but does not have WykSofts administrator access.</p><button className="portal-submit" onClick={() => supabase?.auth.signOut()}>Sign out</button></> : <form onSubmit={login}><span className="admin-lock">W</span><h2>Secure sign in</h2><p>Authorized WykSofts administrators only.</p><label>Email<input name="email" type="email" autoComplete="email" defaultValue="hello@wyksoftsinc.com" required /></label><label>Password<input name="password" type="password" autoComplete="current-password" required /></label>{authError && <p className="portal-error">{authError}</p>}<button className="portal-submit" type="submit">Enter dashboard <span>↗</span></button></form>}
+            {authState === "setup" ? <><h2>Connect Supabase</h2><p>Add the project URL and publishable key to enable secure admin access.</p></> : authState === "denied" ? <><h2>Access restricted</h2><p>This account is signed in but does not have WykSofts administrator access.</p><button className="portal-submit" onClick={() => supabase?.auth.signOut()}>Sign out</button></> : <form onSubmit={login}><span className="admin-lock">W</span><h2>Secure sign in</h2><p>Authorized WykSofts administrators only.</p><label>Email<input name="email" type="email" autoComplete="email" defaultValue="hello@wyksoftsinc.com" required /></label><label>Password<input name="password" type="password" autoComplete="current-password" required /></label><button className="admin-forgot" type="button" onClick={() => void requestPasswordReset()} disabled={resetState === "sending"}>{resetState === "sending" ? "Sending reset link…" : "Forgot password?"}</button>{authError && <p className="portal-error">{authError}</p>}{resetState === "sent" && <p className="admin-reset-notice" role="status">Reset link sent to hello@wyksoftsinc.com. Open the email on this device and choose a new password.</p>}{resetState === "error" && <p className="portal-error" role="alert">We could not send the reset email. Please try again shortly.</p>}<button className="portal-submit" type="submit">Enter dashboard <span>↗</span></button></form>}
           </div>
         </section>
       </main>
