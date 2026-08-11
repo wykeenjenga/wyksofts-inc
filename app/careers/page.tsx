@@ -9,6 +9,7 @@ const roles = [
   { title: "Product Designer", type: "Open application", detail: "UX thinking, interface craft, prototyping, and product systems." },
   { title: "QA Engineer", type: "Open application", detail: "Thoughtful testing, release confidence, and quality advocacy." },
   { title: "Project Delivery", type: "Open application", detail: "Planning, communication, coordination, and dependable delivery." },
+  { title: "Other", type: "Open application", detail: "Tell us about another discipline or capability you could bring to WykSofts." },
 ];
 
 export default function CareersPage() {
@@ -27,7 +28,9 @@ export default function CareersPage() {
     setStatus("sending");
 
     const { error } = await supabase.from("wyksofts_job_applications").insert({
-      role: selectedRole,
+      role: selectedRole === "Other"
+        ? `Other — ${String(values.get("otherRole") ?? "").trim()}`
+        : selectedRole,
       name: String(values.get("name") ?? "").trim(),
       email: String(values.get("email") ?? "").trim(),
       phone: String(values.get("phone") ?? "").trim() || null,
@@ -75,6 +78,16 @@ export default function CareersPage() {
         ) : (
           <form className="portal-form dark-form" onSubmit={submitApplication}>
             <div className="portal-form-grid">
+              {selectedRole === "Other" && (
+                <label className="portal-form-wide">
+                  Your area of expertise
+                  <input
+                    name="otherRole"
+                    placeholder="For example: Data analyst, DevOps, marketing…"
+                    required
+                  />
+                </label>
+              )}
               <label>Full name<input name="name" autoComplete="name" required /></label>
               <label>Email address<input name="email" type="email" autoComplete="email" required /></label>
               <label>Phone <span>Optional</span><input name="phone" type="tel" autoComplete="tel" /></label>

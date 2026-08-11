@@ -2407,6 +2407,7 @@ a {
 
 .portal-form { background: #fffdfa; border: 1px solid var(--line); padding: clamp(28px, 5vw, 70px); }
 .portal-form-grid { display: grid; gap: 28px 24px; grid-template-columns: repeat(2, 1fr); }
+.portal-form-wide { grid-column: 1 / -1; }
 .portal-form label { display: grid; font-size: 12px; font-weight: 700; gap: 10px; }
 .portal-form label > span { color: var(--muted); font-size: 10px; font-weight: 450; }
 .portal-form input, .portal-form select, .portal-form textarea, .admin-tools input, .admin-tools select, .admin-notes textarea, .record-status select, .admin-login-card input {

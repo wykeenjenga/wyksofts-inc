@@ -39,11 +39,12 @@ test("GitHub Pages export keeps the client-side hero interactive", async () => {
 });
 
 test("exports inquiry, booking, careers, and protected admin pages", async () => {
-  const [home, inquiry, booking, careers, admin, resetPassword] = await Promise.all([
+  const [home, inquiry, booking, careers, careerSource, admin, resetPassword] = await Promise.all([
     readFile(new URL("../docs/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/inquiry/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/book/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/careers/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../app/careers/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../docs/admin/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/admin/reset-password/index.html", import.meta.url), "utf8"),
   ]);
@@ -58,6 +59,9 @@ test("exports inquiry, booking, careers, and protected admin pages", async () =>
   assert.match(careers, /Do work that moves people forward/);
   assert.match(careers, /Submit application/);
   assert.match(careers, /Software Engineer/);
+  assert.match(careers, /Tell us about another discipline/);
+  assert.match(careerSource, /Your area of expertise/);
+  assert.match(careerSource, /selectedRole === "Other"/);
   assert.match(admin, /WykSofts Admin/);
   assert.match(admin, /Secure sign in/);
   assert.match(admin, /hello@wyksoftsinc\.com/);
