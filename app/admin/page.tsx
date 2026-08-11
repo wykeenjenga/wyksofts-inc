@@ -83,7 +83,7 @@ export default function AdminPage() {
 
     const { error } = await supabase.auth.resetPasswordForEmail(
       "hello@wyksoftsinc.com",
-      { redirectTo: `${window.location.origin}/admin/reset-password/` },
+      { redirectTo: "https://wyksoftsinc.com/admin/reset-password/" },
     );
 
     if (!error) {
@@ -92,9 +92,7 @@ export default function AdminPage() {
     }
 
     if (error.status === 429 || error.code === "over_email_send_rate_limit") {
-      const seconds = Number(error.message.match(/after (\d+) seconds/i)?.[1] ?? 240);
-      const minutes = Math.max(1, Math.ceil(seconds / 60));
-      setResetError(`A recovery email was already requested. For security, wait about ${minutes} minute${minutes === 1 ? "" : "s"} before requesting another.`);
+      setResetError("No new email was sent. The temporary mail service has reached its hourly allowance. Check Inbox, Spam, or Junk for the earlier message from noreply@mail.app.supabase.io. If it is missing, WykSofts email delivery must be connected before another reset can be sent.");
       setResetState("rate-limited");
       return;
     }
@@ -124,7 +122,7 @@ export default function AdminPage() {
         <section className="admin-login-wrap">
           <div className="admin-login-copy"><p className="section-kicker">Private workspace</p><h1>WykSofts Admin</h1><p>Review project inquiries and career applications from one focused workspace.</p></div>
           <div className="admin-login-card">
-            {authState === "setup" ? <><h2>Connect Supabase</h2><p>Add the project URL and publishable key to enable secure admin access.</p></> : authState === "denied" ? <><h2>Access restricted</h2><p>This account is signed in but does not have WykSofts administrator access.</p><button className="portal-submit" onClick={() => supabase?.auth.signOut()}>Sign out</button></> : <form onSubmit={login}><BrandMark className="admin-lock" /><h2>Secure sign in</h2><p>Authorized WykSofts administrators only.</p><label>Email<input name="email" type="email" autoComplete="email" defaultValue="hello@wyksoftsinc.com" required /></label><label>Password<input name="password" type="password" autoComplete="current-password" required /></label><button className="admin-forgot" type="button" onClick={() => void requestPasswordReset()} disabled={resetState === "sending" || resetState === "sent" || resetState === "rate-limited"}>{resetState === "sending" ? "Sending reset link…" : resetState === "sent" ? "Reset link sent" : "Forgot password?"}</button>{authError && <p className="portal-error">{authError}</p>}{resetState === "sent" && <p className="admin-reset-notice" role="status">Reset link sent to hello@wyksoftsinc.com. Open the newest email and choose a new password.</p>}{(resetState === "error" || resetState === "rate-limited") && <p className="portal-error" role="alert">{resetError}</p>}<button className="portal-submit" type="submit">Enter dashboard <span>↗</span></button></form>}
+            {authState === "setup" ? <><h2>Connect Supabase</h2><p>Add the project URL and publishable key to enable secure admin access.</p></> : authState === "denied" ? <><h2>Access restricted</h2><p>This account is signed in but does not have WykSofts administrator access.</p><button className="portal-submit" onClick={() => supabase?.auth.signOut()}>Sign out</button></> : <form onSubmit={login}><BrandMark className="admin-lock" /><h2>Secure sign in</h2><p>Authorized WykSofts administrators only.</p><label>Email<input name="email" type="email" autoComplete="email" defaultValue="hello@wyksoftsinc.com" required /></label><label>Password<input name="password" type="password" autoComplete="current-password" required /></label><button className="admin-forgot" type="button" onClick={() => void requestPasswordReset()} disabled={resetState === "sending" || resetState === "sent" || resetState === "rate-limited"}>{resetState === "sending" ? "Sending reset link…" : resetState === "sent" ? "Reset request accepted" : resetState === "rate-limited" ? "Email limit reached" : "Forgot password?"}</button>{authError && <p className="portal-error">{authError}</p>}{resetState === "sent" && <p className="admin-reset-notice" role="status">Reset request accepted for hello@wyksoftsinc.com. Check Inbox, Spam, and Junk for a message from noreply@mail.app.supabase.io.</p>}{(resetState === "error" || resetState === "rate-limited") && <p className="portal-error" role="alert">{resetError}</p>}<button className="portal-submit" type="submit">Enter dashboard <span>↗</span></button></form>}
           </div>
         </section>
       </main>
