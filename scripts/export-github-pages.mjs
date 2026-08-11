@@ -9,6 +9,7 @@ const { default: worker } = await import(
 const routes = [
   { path: "/", output: "index.html", prefix: "./" },
   { path: "/inquiry", output: "inquiry/index.html", prefix: "../" },
+  { path: "/book", output: "book/index.html", prefix: "../" },
   { path: "/careers", output: "careers/index.html", prefix: "../" },
   { path: "/admin", output: "admin/index.html", prefix: "../" },
   { path: "/admin/reset-password", output: "admin/reset-password/index.html", prefix: "../../" },

@@ -877,7 +877,7 @@ export default function Home() {
           <h2>Good questions deserve clear answers.</h2>
           <p>
             A quick guide to pricing, timelines, ownership, support, and how we
-            work. If your question is more specific, book a short discovery call.
+            work. If your question is more specific, <a href="/book/">book a short discovery call</a>.
           </p>
         </div>
         <div className="faq-list">
@@ -904,7 +904,7 @@ export default function Home() {
             accepted by both parties; that signed document takes priority if
             anything differs.
           </p>
-          <span className="policy-date">Last updated 3 August 2026</span>
+          <span className="policy-date">Last updated 11 August 2026</span>
         </div>
 
         <div className="policy-list">
@@ -964,11 +964,11 @@ export default function Home() {
                 do not sell personal information.
               </p>
               <p>
-                The quotation builder works on your device and opens your chosen
-                email or WhatsApp application; this website does not store the
-                answers you type. Communications are then handled by the provider
-                you choose to use. Privacy questions can be sent to
-                hello@wyksoftsinc.com.
+                When you submit a quotation, project inquiry, job application, or
+                discovery-call request, the details are stored securely so our
+                authorized team can review and respond. We retain business records
+                only as needed for the relevant conversation or engagement. Privacy
+                questions can be sent to hello@wyksoftsinc.com.
               </p>
               <a
                 href="https://new.kenyalaw.org/akn/ke/act/2019/24/eng@2022-12-31"
@@ -1046,7 +1046,7 @@ export default function Home() {
             </a>
             <a
               className="button discovery-button"
-              href="mailto:hello@wyksoftsinc.com?subject=Book%20a%2030-minute%20WykSofts%20discovery%20call&body=Name%3A%0ACompany%3A%0ATime%20zone%3A%0APreferred%20dates%20and%20times%3A%0AWhat%20I%27d%20like%20to%20discuss%3A"
+              href="/book/"
             >
               Book a discovery call
               <span aria-hidden="true">↗</span>

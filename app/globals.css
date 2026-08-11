@@ -1590,6 +1590,13 @@ a {
   max-width: 550px;
 }
 
+.faq-heading > p:last-child a {
+  color: var(--paper);
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-underline-offset: 4px;
+}
+
 .faq-list {
   border-top: 1px solid rgba(243, 240, 232, 0.38);
 }
@@ -2423,6 +2430,14 @@ a {
 .portal-success h2 { font-size: clamp(45px, 6vw, 78px); letter-spacing: -.065em; line-height: .95; margin: 42px 0 24px; }
 .portal-success > p:not(.section-kicker) { line-height: 1.65; max-width: 500px; }
 .portal-success .button { margin-top: 30px; }
+
+.booking-hero h1 { max-width: 980px; }
+.booking-layout { align-items: start; }
+.booking-form { position: relative; }
+.booking-form::before { background: var(--orange); content: ""; height: 6px; left: -1px; position: absolute; right: -1px; top: -1px; }
+.booking-form-heading { border-bottom: 1px solid var(--line); margin-bottom: 42px; padding-bottom: 34px; }
+.booking-form-heading h2 { font-size: clamp(36px, 4.5vw, 62px); letter-spacing: -.06em; line-height: 1; margin: 22px 0 16px; }
+.booking-form-heading > p:last-child { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 0; }
 
 .careers-portal-hero { background-color: var(--ink); background-image: linear-gradient(rgba(243,240,232,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(243,240,232,.09) 1px, transparent 1px); color: var(--paper); }
 .careers-portal-hero > p { border-color: rgba(243,240,232,.2); color: #b4afa5; }

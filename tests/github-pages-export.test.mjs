@@ -38,9 +38,11 @@ test("GitHub Pages export keeps the client-side hero interactive", async () => {
   ]);
 });
 
-test("exports inquiry, careers, and protected admin pages", async () => {
-  const [inquiry, careers, admin, resetPassword] = await Promise.all([
+test("exports inquiry, booking, careers, and protected admin pages", async () => {
+  const [home, inquiry, booking, careers, admin, resetPassword] = await Promise.all([
+    readFile(new URL("../docs/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/inquiry/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../docs/book/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/careers/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/admin/index.html", import.meta.url), "utf8"),
     readFile(new URL("../docs/admin/reset-password/index.html", import.meta.url), "utf8"),
@@ -49,6 +51,10 @@ test("exports inquiry, careers, and protected admin pages", async () => {
   assert.match(inquiry, /Tell us what you want to build/);
   assert.match(inquiry, /Send project inquiry/);
   assert.match(inquiry, /\.\.\/assets\/index-/);
+  assert.match(home, /href="\/book\/"/);
+  assert.match(booking, /clearest next move/);
+  assert.match(booking, /Request discovery call/);
+  assert.match(booking, /\.\.\/assets\/index-/);
   assert.match(careers, /Do work that moves people forward/);
   assert.match(careers, /Submit application/);
   assert.match(careers, /Software Engineer/);
