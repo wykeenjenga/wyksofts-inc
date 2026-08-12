@@ -112,3 +112,23 @@ test("covers recovery failures and ships WykSofts email templates", async () => 
   assert.match(confirmationEmail, /Confirm your administrator account/);
   assert.doesNotMatch(`${recoveryEmail}${confirmationEmail}`, /nomp|support@mynomp/i);
 });
+
+test("ships privacy-conscious website analytics and the admin reporting workspace", async () => {
+  const [analyticsSource, adminSource, migration] = await Promise.all([
+    readFile(new URL("../app/components/SiteAnalytics.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/admin/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../supabase/migrations/20260812131642_add_website_analytics.sql", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(analyticsSource, /navigator\.doNotTrack/);
+  assert.match(analyticsSource, /pathname\.startsWith\("\/admin"\)/);
+  assert.match(analyticsSource, /referrer_domain/);
+  assert.doesNotMatch(analyticsSource, /ip_address|document\.referrer[^)]*insert/);
+  assert.match(adminSource, /Website analytics/);
+  assert.match(adminSource, /Lead conversion/);
+  assert.match(adminSource, /Export CSV/);
+  assert.match(adminSource, /No IP addresses or personal visitor data collected/);
+  assert.match(migration, /enable row level security/);
+  assert.match(migration, /WykSofts admin can read website analytics/);
+  assert.match(migration, /hello@wyksoftsinc\.com/);
+});
