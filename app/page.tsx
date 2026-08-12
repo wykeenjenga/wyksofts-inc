@@ -1,4 +1,5 @@
 import { HomeHero } from "./components/HomeHero";
+import { RecoveryRedirect } from "./components/RecoveryRedirect";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { organizationSchema, projects, services } from "./data/site";
@@ -6,6 +7,7 @@ import { organizationSchema, projects, services } from "./data/site";
 export default function Home() {
   return (
     <main>
+      <RecoveryRedirect />
       <SiteHeader />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
       <HomeHero />
